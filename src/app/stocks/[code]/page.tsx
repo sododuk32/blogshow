@@ -17,7 +17,7 @@ import React from 'react';
 // app/stocks/[code]/page.tsx
 
 export async function generateStaticParams() {
-  return [{ code: 'apple' }, { code: 'samsung' }, { code: 'tesla' }];
+  return [{ code: 'apple' }, { code: 'samsung' }, { code: 'tsla' }, { code: 'Alphabet' }];
 }
 
 type Props = {
