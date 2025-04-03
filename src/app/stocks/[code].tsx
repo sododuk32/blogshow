@@ -18,7 +18,7 @@ export async function getServerSideProps(
 }
 
 function Code({ data }: Props) {
-  return <div>{data}</div>;
+  return <div>{data} : 코드 </div>;
 }
 
 export default Code;
