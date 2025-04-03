@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body className="bg-black text-white p-10">
-        <h1 className="text-4xl font-bold">Tailwind 작동 테스트 🎯 gS9d</h1>
+        <h1 className="text-4xl font-bold">Tailwind 작동 테스트 🎯 gS9d ls</h1>
         {children}
       </body>
     </html>
