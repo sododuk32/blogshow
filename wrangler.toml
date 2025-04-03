@@ -1,5 +1,5 @@
 # wrangler.toml
-name = "my-next-app"
+name = "blogshow"
 account_id = "ace693a2998feefb0bdf639434ffd8bb"  # ← Cloudflare 대시보드에서 복사
 compatibility_date = "2024-04-01"
 pages_build_output_dir = ".vercel/output/static"
