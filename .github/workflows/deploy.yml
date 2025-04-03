@@ -24,7 +24,7 @@ jobs:
       - name: 🚀 Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ secrets.DeployGit }}
+          apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} # 필요시
           projectName: blogshow # Cloudflare Pages의 설정 이름
           directory: .next # 또는 out, dist 등
