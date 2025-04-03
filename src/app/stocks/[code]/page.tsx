@@ -25,5 +25,5 @@ type Props = {
 };
 
 export default function StockDetailPage({ params }: Props) {
-  return <div>상세 페이지: {params.code}</div>;
+  return <div>상세 페이지g: {params.code}</div>;
 }
