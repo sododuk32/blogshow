@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = { output: 'export' };
+const nextConfig = { reactStrictMode: false };
 
 export default nextConfig;
