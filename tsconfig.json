@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,28 +17,15 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/util*": [
-        "./src/util/*"
-      ],
-      "@/ui*": [
-        "./src/ui/*"
-      ],
-      "@/store*": [
-        "./src/store/*"
-      ]
+      "@*": ["src/*"],
+      "@util/*": ["src/util/*"],
+      "@ui/*": ["src/ui/*"],
+      "@store/*": ["src/store/*"],
+      "@api/*": ["src/api/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/giveKey"],
+  "exclude": ["node_modules"]
 }
