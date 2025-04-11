@@ -42,6 +42,9 @@ export function getKey(): string | null {
     const raw = fs.readFileSync(filePath, 'utf-8');
     const data: StoredKey = JSON.parse(raw);
     const expired = Date.now() - data.timestamp > TTL;
+
+    console.log(expired);
+    console.log(data.value);
     return expired ? null : data.value;
   } catch (e) {
     console.error('[getKey] read error', e);
