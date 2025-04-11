@@ -9,6 +9,7 @@ type StoredKey = {
 };
 
 export function setKey(key: string) {
+  console.log('setKey start');
   fs.mkdirSync('./.cache', { recursive: true });
 
   const now = Date.now();
@@ -37,14 +38,16 @@ export function setKey(key: string) {
 
 export function getKey(): string | null {
   if (!fs.existsSync(filePath)) return null;
-
+  console.log(filePath);
   try {
     const raw = fs.readFileSync(filePath, 'utf-8');
+    console.log(raw);
     const data: StoredKey = JSON.parse(raw);
     const expired = Date.now() - data.timestamp > TTL;
 
-    console.log(expired);
-    console.log(data.value);
+    console.log('expired:   ' + expired);
+
+    console.log('data:   ' + data.value);
     return expired ? null : data.value;
   } catch (e) {
     console.error('[getKey] read error', e);

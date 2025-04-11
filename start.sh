@@ -9,7 +9,7 @@ while true; do
   RESPONSE=$(curl -s http://localhost:3000/api/giveKey)
   MESSAGE=$(echo "$RESPONSE" | jq -r .message)
 
-  if [ "${#MESSAGE}" -ge 5 ]; then
+  if [ "${#MESSAGE}" -ge 4 ]; then
     echo "✅ message 길이: ${#MESSAGE}, 내용: $MESSAGE"
     break
   fi
