@@ -24,6 +24,10 @@
     # --- Run Stage ---
     FROM node:20-alpine
 
+    ARG HanTKey
+    ARG HanTSecret
+    ARG HantBaseUrl
+
     ENV HanTKey=$HanTKey
     ENV HanTSecret=$HanTSecret
     ENV HantBaseUrl=$HantBaseUrl
