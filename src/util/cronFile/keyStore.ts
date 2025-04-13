@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const filePath = './.cache/auth-key.json';
+const filePath = './cache_data/auth-key.json';
 const TTL = 1000 * 60 * 60 * 12; // 12시간
 
 type StoredKey = {
@@ -10,7 +10,7 @@ type StoredKey = {
 
 export function setKey(key: string) {
   console.log('setKey start');
-  fs.mkdirSync('./.cache', { recursive: true });
+  fs.mkdirSync('./cache_data', { recursive: true });
 
   const now = Date.now();
 
