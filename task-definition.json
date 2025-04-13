@@ -1,0 +1,19 @@
+{
+  "family": "blogshow-task",
+  "requiresCompatibilities": ["EC2"],
+  "containerDefinitions": [
+    {
+      "name": "blogshow",
+      "image": "447397120942.dkr.ecr.ap-northeast-2.amazonaws.com/blogshowconnect:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000
+        }
+      ]
+    }
+  ]
+}

@@ -1,30 +1,53 @@
-# .github/workflows/deploy.yml
-
-name: Deploy to Cloudflare Pages + Functions
+name: Deploy to Amazon ECS this Next js Image
 
 on:
   push:
-    branches:
-      - master # 또는 master
+    branches: [master]
+
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+  ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
+  ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
+  ECS_TASK_FAMILY: ${{ secrets.ECS_TASK_FAMILY }}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: 📦 Install deps
-        run: npm ci
-
-      - name: 🛠 Build Next.js project
-        run: npm run build
-
-      - name: 🚀 Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: 🔐 Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} # 필요시
-          projectName: blogshow # Cloudflare Pages의 설정 이름
-          directory: out # 또는 out, dist 등
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push Docker image
+        run: |
+          IMAGE_URI=$(aws ecr describe-repositories --repository-names $ECR_REPOSITORY --region $AWS_REGION --query "repositories[0].repositoryUri" --output text)
+          docker build -t $IMAGE_URI .
+          docker push $IMAGE_URI
+          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
+      - name: Fill in new image ID in task definition
+        id: render-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: blogshow
+          image: ${{ env.IMAGE_URI }}
+
+      - name: Deploy ECS task
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true

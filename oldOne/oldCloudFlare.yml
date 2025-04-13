@@ -1,0 +1,30 @@
+# .github/workflows/deploy.yml
+
+name: Deploy to Cloudflare Pages + Functions
+
+on:
+  push:
+    branches:
+      - master # 또는 master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 📦 Install deps
+        run: npm ci
+
+      - name: 🛠 Build Next.js project
+        run: npm run build
+
+      - name: 🚀 Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} # 필요시
+          projectName: blogshow # Cloudflare Pages의 설정 이름
+          directory: out # 또는 out, dist 등

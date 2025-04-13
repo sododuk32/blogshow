@@ -36,6 +36,7 @@
     
     # 8. 실행에 필요한 파일 복사
     COPY --from=builder /app/.next ./.next
+    COPY --from=builder /app/public ./public
     COPY --from=builder /app/package.json ./package.json
     COPY --from=builder /app/node_modules ./node_modules
     COPY --from=builder /app/start.sh ./start.sh
@@ -52,3 +53,5 @@
     # 11. 앱 시작
     CMD ["sh", "./start.sh"]
     
+    # jq 안깔아서 오류남. => env 없어서 컨테이너 내부에서 실행시 오류남
+    # 
