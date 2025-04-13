@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from 'next/server';
 import { getKey, setKey } from '@/util/cronFile/keyStore';
-import fetchingHTKey from '../../../handler/http/fetchGettingKey';
-import { AccessTokenRes } from '../../../handler/http/fetchGettingKey';
+import fetchingHTKey from '@handler/http/fetchGettingKey';
+import { HashKeyRes } from '@handler/http/fetchGettingKey';
 export async function GET() {
+  console.log('getKey');
+
   const key = getKey();
 
   console.log('key:   ' + key);
   if (!key) {
     console.log('no keys');
-    const realKey: AccessTokenRes | undefined = await fetchingHTKey();
-    console.log(realKey?.access_token);
-    if (realKey?.access_token) {
-      setKey(realKey?.access_token);
+    const realKey: HashKeyRes | undefined = await fetchingHTKey();
+
+    if (realKey?.HASH) {
+      setKey(realKey?.HASH);
 
       //if (realKey?.HASH)
-      return NextResponse.json({ message: 'get new hash' });
+      return NextResponse.json({ message: realKey });
     }
     // if (!key)
     return NextResponse.json({ message: 'no' });

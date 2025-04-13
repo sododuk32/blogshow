@@ -21,7 +21,7 @@ export function setKey(key: string) {
       const existing: StoredKey = JSON.parse(raw);
 
       const notExpired = now - existing.timestamp < TTL;
-      if (notExpired) {
+      if (notExpired && existing.value) {
         console.log('[setKey] 기존 key 유효함 → 덮어쓰기 생략');
         return;
       }

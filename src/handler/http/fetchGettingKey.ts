@@ -19,7 +19,9 @@ export default async function fetchingHTKey() {
     grant_type: 'client_credentials',
   };
   const reqUrl = `${BaseUrls}/uapi/hashkey`;
-  const TokenOBJ = await safeFetch<AccessTokenRes>(reqUrl, 'GET', null, headers1);
+  const TokenOBJ = await safeFetch<HashKeyRes>(reqUrl, 'GET', null, headers1);
+  console.log('get from ./..');
+  console.log(TokenOBJ);
   return TokenOBJ;
 }
 

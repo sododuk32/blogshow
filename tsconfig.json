@@ -23,7 +23,8 @@
       "@util/*": ["src/util/*"],
       "@ui/*": ["src/ui/*"],
       "@store/*": ["src/store/*"],
-      "@api/*": ["src/api/*"]
+      "@api/*": ["src/api/*"],
+      "@handler/*": ["src/handler/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/giveKey"],
