@@ -42,8 +42,8 @@
     COPY --from=builder /app/node_modules ./node_modules
     COPY --from=builder /app/start.sh ./start.sh
     
-    # 9. .env 및 .cache 복사
-    COPY .cache /app/.cache 
+    # 9. .env 및 .cache_data 복사
+    COPY cache_data /app/cache_data
     
     # 10. 실행 권한 부여
     RUN chmod +x ./start.sh
