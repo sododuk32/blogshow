@@ -29,10 +29,16 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push Docker image
+      - name: 🐳 Build, tag, and push Docker image
         run: |
           IMAGE_URI=$(aws ecr describe-repositories --repository-names $ECR_REPOSITORY --region $AWS_REGION --query "repositories[0].repositoryUri" --output text)
-          docker build -t $IMAGE_URI .
+
+          docker build \
+            --build-arg HanTKey=${{ secrets.INCODE_HANTKEY }} \
+            --build-arg HanTSecret=${{ secrets.INCODE_HANTSECRET }} \
+            --build-arg HantBaseUrl=${{ secrets.INCODE_HANTBASEURL }} \
+            -t $IMAGE_URI .
+
           docker push $IMAGE_URI
           echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
 

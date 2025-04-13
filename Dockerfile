@@ -11,8 +11,9 @@
     
     # 3. 환경변수 런타임까지 넘기고 싶다면 ENV로 지정
     ENV HanTKey=$HanTKey \
-        HanTSecret=$HanTSecret \
-        HantBaseUrl=$HantBaseUrl
+    HanTSecret=$HanTSecret \
+    HantBaseUrl=$HantBaseUrl
+
     
     WORKDIR /app
     
@@ -42,7 +43,6 @@
     COPY --from=builder /app/start.sh ./start.sh
     
     # 9. .env 및 .cache 복사
-    COPY .env .env
     COPY .cache /app/.cache 
     
     # 10. 실행 권한 부여
@@ -54,4 +54,5 @@
     CMD ["sh", "./start.sh"]
     
     # jq 안깔아서 오류남. => env 없어서 컨테이너 내부에서 실행시 오류남
-    # 
+    # 25 04 14 / 로컬 이미지 빌드 말고 github actions에 맞게 환경변수 참조 위치변경. 
+    #     COPY .env .env => 삭제 
