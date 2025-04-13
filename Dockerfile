@@ -8,12 +8,9 @@
     ARG HanTKey
     ARG HanTSecret
     ARG HantBaseUrl
-    
-    # 3. 환경변수 런타임까지 넘기고 싶다면 ENV로 지정
-    ENV HanTKey=$HanTKey \
-    HanTSecret=$HanTSecret \
-    HantBaseUrl=$HantBaseUrl
-
+    ENV HanTKey=$HanTKey
+    ENV HanTSecret=$HanTSecret
+    ENV HantBaseUrl=$HantBaseUrl
     
     WORKDIR /app
     
@@ -26,8 +23,13 @@
     
     # --- Run Stage ---
     FROM node:20-alpine
+
+    ENV HanTKey=$HanTKey
+    ENV HanTSecret=$HanTSecret
+    ENV HantBaseUrl=$HantBaseUrl
     
     WORKDIR /app
+
     
     # 6. 런타임 필요한 패키지 설치
     RUN apk update && apk add --no-cache curl jq
