@@ -57,7 +57,7 @@
     # 10. 실행 권한 부여
     RUN chmod +x ./start.sh
     
-    EXPOSE 3000
+    EXPOSE 80
     
     # 11. 앱 시작
     CMD ["sh", "./start.sh"]
