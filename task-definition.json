@@ -1,6 +1,6 @@
 {
   "family": "blogshow-task",
-  "networkMode": "awsvpc",
+  "networkMode": "bridge",
   "requiresCompatibilities": ["EC2"],
   "containerDefinitions": [
     {

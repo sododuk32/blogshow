@@ -61,7 +61,9 @@
     EXPOSE 443
     EXPOSE 80
     EXPOSE 3026
-    
+    EXPOSE 31000
+    EXPOSE 21000
+
     # 11. 앱 시작
     CMD ["sh", "./start.sh"]
     
