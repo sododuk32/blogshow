@@ -10,13 +10,14 @@
       "cpu": 256,
       "essential": true,
       "portMappings": [
-        { "containerPort": 3000, "hostPort": 3000, "protocol": "tcp" },
-        { "containerPort": 443, "hostPort": 443, "protocol": "tcp" },
-        { "containerPort": 80, "hostPort": 80, "protocol": "tcp" },
-        { "containerPort": 3026, "hostPort": 3026, "protocol": "tcp" },
-        { "containerPort": 31000, "hostPort": 31000, "protocol": "tcp" },
-        { "containerPort": 21000, "hostPort": 21000, "protocol": "tcp" }
+        { "containerPort": 3000, "hostPort": 0, "protocol": "tcp" },
+        { "containerPort": 443, "hostPort": 0, "protocol": "tcp" },
+        { "containerPort": 80, "hostPort": 0, "protocol": "tcp" },
+        { "containerPort": 3026, "hostPort": 0, "protocol": "tcp" },
+        { "containerPort": 31000, "hostPort": 0, "protocol": "tcp" },
+        { "containerPort": 21000, "hostPort": 0, "protocol": "tcp" }
       ],
+
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
