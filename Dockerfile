@@ -36,7 +36,7 @@
 
     
     # 6. 런타임 필요한 패키지 설치
-    RUN apk update && apk add --no-cache curl jq
+    RUN apk update && apk add --no-cache nginx curl jq
     
     # 7. PM2 설치
     RUN npm install -g pm2 pm2-runtime
@@ -48,6 +48,9 @@
     COPY --from=builder /app/node_modules ./node_modules
     COPY --from=builder /app/start.sh ./start.sh
     
+    # ✅ nginx 설정 복사
+    COPY nginx.conf /etc/nginx/nginx.conf
+
     # 9. .env 및 .cache_data 복사
     COPY cache_data /app/cache_data
     

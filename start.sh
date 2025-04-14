@@ -1,3 +1,6 @@
+echo "🚀 Starting NGINX..."
+nginx
+
 echo "Starting Next.js with PM2..."
 pm2 start npm --name "nextjs" -- run start
 #!/bin/bash
