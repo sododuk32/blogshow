@@ -49,7 +49,7 @@
     COPY --from=builder /app/start.sh ./start.sh
     
     # ✅ nginx 설정 복사
-    COPY nginx.conf /etc/nginx/nginx.conf
+    COPY NginxCon/nginx.conf /etc/nginx/nginx.conf
 
     # 9. .env 및 .cache_data 복사
     COPY cache_data /app/cache_data
