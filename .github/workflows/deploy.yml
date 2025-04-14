@@ -10,7 +10,7 @@ env:
   ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
   ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
   ECS_TASK_FAMILY: ${{ secrets.ECS_TASK_FAMILY }}
-
+  ECS_ELASTIC_IP: eipalloc-0848fe4036153a9a8
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -57,3 +57,36 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+
+      - name: 🔗 Associate Elastic IP to newest matching EC2 instance
+        run: |
+          echo "🔍 Finding EC2 instance with 'sCh' in tags and running state..."
+
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=instance-state-name,Values=running" \
+            --query "Reservations[*].Instances[*].{InstanceId:InstanceId,LaunchTime:LaunchTime,Tags:Tags}" \
+            --output json --region $AWS_REGION | \
+            jq -r '
+              [.[][] 
+               | select(.Tags[]?.Value | contains("sCh")) 
+              ] 
+              | sort_by(.LaunchTime) 
+              | last 
+              | .InstanceId')
+
+          if [ -z "$INSTANCE_ID" ]; then
+          echo "❌ No matching EC2 instance found with tag value containing 'sCh'."
+          exit 1
+
+          fi
+
+          echo "✅ Found EC2 instance ID: $INSTANCE_ID"
+
+          aws ec2 associate-address \
+            --instance-id "$INSTANCE_ID" \
+            --allocation-id "$ECS_ELASTIC_IP" \
+            --region $AWS_REGION \
+            --allow-reassociation
+
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
