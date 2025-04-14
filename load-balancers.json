@@ -1,0 +1,7 @@
+[
+  {
+    "targetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-2:447397120942:targetgroup/kdy-sCh/2673535bcb042e20",
+    "containerName": "blogshow",
+    "containerPort": 80
+  }
+]

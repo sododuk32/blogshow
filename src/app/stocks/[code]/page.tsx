@@ -10,6 +10,9 @@ async function getDogs(number: string) {
     headers: { accept: 'application/json' },
     next: { revalidate: 3600 },
   });
+  if (!(await res).ok) {
+    console.log(res);
+  }
   const json = await (await res).json();
 
   return json;
