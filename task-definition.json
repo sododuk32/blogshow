@@ -9,7 +9,7 @@
       "memory": 512,
       "cpu": 256,
       "essential": true,
-      "portMappings": [{ "containerPort": 3000, "hostPort": 0, "protocol": "tcp" }],
+      "portMappings": [{ "containerPort": 3000, "hostPort": 80 }],
 
       "logConfiguration": {
         "logDriver": "awslogs",
