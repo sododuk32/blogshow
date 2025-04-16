@@ -1,0 +1,35 @@
+{                                                                                               
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:ap-northeast-2:447397120942:loadbalancer/app/forNext/b742e9838ecd2a9e",
+            "DNSName": "forNext-1031881817.ap-northeast-2.elb.amazonaws.com",
+            "CanonicalHostedZoneId": "ZWKZPGTI48KDX",
+            "CreatedTime": "2025-04-14T11:22:24.136000+00:00",
+            "LoadBalancerName": "forNext",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-ddc869b6",
+            "State": {
+                "Code": "active"
+            },
+            "Type": "application",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "ap-northeast-2c",
+                    "SubnetId": "subnet-1c373050",
+                    "LoadBalancerAddresses": []
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "ap-northeast-2b",
+                    "SubnetId": "subnet-f54ac68e",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "SecurityGroups": [
+                "sg-962527f3"
+            ],
+            "IpAddressType": "ipv4",
+            "EnablePrefixForIpv6SourceNat": "off"
+        }
+    ]
+}

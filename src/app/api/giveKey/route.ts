@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from 'next/server';
 import { getKey, setKey } from '@/util/cronFile/keyStore';
-import fetchingHTKey from '@handler/http/fetchGettingKey';
-import { HashKeyRes } from '@handler/http/fetchGettingKey';
+import fetchingHTKey, { HashKeyRes } from '@handler/http/auth/fetchGettingKey';
+
 export async function GET() {
   console.log('getKey');
 
