@@ -1,28 +1,37 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from 'next/server';
 import { getKey, setKey } from '@/util/cronFile/keyStore';
-import fetchingHTKey, { HashKeyRes } from '@handler/http/auth/fetchGettingKey';
+import fetchingHTKey, { fetchingHTSocketKey } from '@handler/http/auth/fetchGettingKey';
+import { KeyPackage } from '@util/types/authWithHantoo';
 
 export async function GET() {
-  console.log('getKey');
-
   const key = getKey();
-
-  console.log('key:   ' + key);
-  if (!key) {
-    console.log('no keys');
-    const realKey: HashKeyRes | undefined = await fetchingHTKey();
-
-    if (realKey?.HASH) {
-      setKey(realKey?.HASH);
-
-      //if (realKey?.HASH)
-      return NextResponse.json({ message: realKey });
-    }
-    // if (!key)
-    return NextResponse.json({ message: 'no' });
+  if (key) {
+    console.log('✅ 캐시된 키 있음');
+    return NextResponse.json({ message: 'have hash' });
   }
-  // yes key
-  console.log('yes keys');
-  return NextResponse.json({ message: 'have hash' });
+
+  console.log('🚀 키 없음 → fetch 시도');
+  const [keyResult, socketResult] = await Promise.allSettled([
+    fetchingHTKey(),
+    fetchingHTSocketKey(),
+  ]);
+
+  const now = () => new Date().getTime();
+  const packages: KeyPackage[] = [];
+
+  if (keyResult.status === 'fulfilled' && keyResult.value?.HASH) {
+    packages.push({ value: keyResult.value.HASH, timestamp: now() });
+  }
+
+  if (socketResult.status === 'fulfilled' && socketResult.value?.approval_key) {
+    packages.push({ value: socketResult.value.approval_key, timestamp: now() });
+  }
+
+  if (packages.length > 0) {
+    setKey(packages); // 🔐 저장
+    return NextResponse.json({ message: 'get new keys' });
+  }
+
+  return NextResponse.json({ message: 'no' });
 }
