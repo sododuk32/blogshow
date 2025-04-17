@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+import MainListMenu from '@/ui/MainListMenu';
 
 type Props = {
   params: { code: string };
@@ -42,7 +43,8 @@ export default async function Page({ params }: Props) {
           <li key={dogs.id}>{dogs?.name}</li>
           {/* this part for server components , and props go throght out data is change every time  */}
         </ul>
-      </div>
+      </div>{' '}
+      <MainListMenu />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
+import { box } from './index.css';
 
-function index() {
-  return <div>MainListMenu</div>;
+function MainListMenu() {
+  return <div className={box}>MainListMenu</div>;
 }
 
-export default index;
+export default MainListMenu;
