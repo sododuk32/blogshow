@@ -1,4 +1,4 @@
-deployments
+## deployments
 
 github action -> ecs deployments
 
@@ -6,7 +6,7 @@ github action ( build image ) => upload to ecr storage =>
 
 make ecs tesk for image => make ec2 container => combine with gartget group => make (api/giveKey) http contact and generate keyValue for hanto server connect
 
-styles
+## styles
 
 using vailla extract style folder struct
 
