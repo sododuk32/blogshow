@@ -2,9 +2,12 @@
 
 github action -> ecs deployments
 
-github action ( build image ) => upload to ecr storage =>
-
-make ecs tesk for image => make ec2 container => combine with gartget group => make (api/giveKey) http contact and generate keyValue for hanto server connect
+1. github action ( build image )
+2. upload to ecr storage
+3. runs on ecs service then make ecs tesk for image
+4. build image && upload ec2 container
+5. combine with gartget group
+6. make (api/giveKey) http contact and generate keyValue for hantoo server connect
 
 ## styles
 
