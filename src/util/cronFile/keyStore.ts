@@ -12,7 +12,6 @@ export function setKey(key: KeyPackage[]) {
 
   const now = Date.now();
 
-  // 기존 키가 있으면, 타임스탬프 비교
   if (fs.existsSync(filePath)) {
     try {
       const raw = fs.readFileSync(filePath, 'utf-8');
@@ -22,13 +21,11 @@ export function setKey(key: KeyPackage[]) {
       const notExpired = (pkg: KeyPackage | undefined) => !!pkg && now - pkg.timestamp < TTL;
 
       if (notExpired(existing[0])) {
-        console.log('[setKey] 기존 일반key 유효함 → 덮어쓰기 생략');
-        return;
+        return console.log('[setKey] 기존 일반key 유효함 → 덮어쓰기 생략');
       }
 
       if (notExpired(existing[1])) {
-        console.log('[setKey] 기존 소켓key 유효함 → 덮어쓰기 생략');
-        return;
+        return console.log('[setKey] 기존 소켓key 유효함 → 덮어쓰기 생략');
       }
     } catch (e) {
       console.warn('[setKey] 기존 key 읽기 실패 → 덮어쓰기 진행');
@@ -40,7 +37,7 @@ export function setKey(key: KeyPackage[]) {
         if (!Array.isArray(parsed)) {
           throw new Error('파일 내용이 배열이 아님');
         }
-
+        console.log('여기');
         if (!parsed[0]?.value) console.warn('⚠️ 기존 일반 key 누락됨');
         if (!parsed[1]?.value) console.warn('⚠️ 기존 소켓 key 누락됨');
       } catch (innerErr) {
@@ -52,26 +49,40 @@ export function setKey(key: KeyPackage[]) {
   }
 
   // 수정
-  const data: KeyPackage = { value: key, timestamp: now };
+  console.log(key);
+  const data: KeyPackage[] = [
+    { value: key[0].value, timestamp: now },
+    { value: key[1].value, timestamp: now },
+  ];
+  console.log(data);
+
   fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
   console.log('[setKey] key 저장 완료');
 }
 
-export function getKey(): string | null {
-  if (!fs.existsSync(filePath)) return null;
+/**
+ * 키 존재 유무. expired 유무 || 값 존재 유무 4개중 하나라도 false이면 false
+ * @returns
+ */
+export function getKey(): boolean {
+  if (!fs.existsSync(filePath)) return false;
+
   console.log(filePath);
+
   try {
     const raw = fs.readFileSync(filePath, 'utf-8');
+    const data: KeyPackage[] = JSON.parse(raw);
+
+    const bothNotExpired =
+      Date.now() - data[0].timestamp < TTL && Date.now() - data[1].timestamp < TTL;
+
+    const bothHaveValue = !!data[0]?.value && !!data[1]?.value;
+
     console.log(raw);
-    const data: KeyPackage = JSON.parse(raw);
-    const expired = Date.now() - data.timestamp > TTL;
 
-    console.log('expired:   ' + expired);
-
-    console.log('data:   ' + data.value);
-    return expired ? null : data.value;
+    return bothNotExpired && bothHaveValue;
   } catch (e) {
     console.error('[getKey] read error', e);
-    return null;
+    return false;
   }
 }

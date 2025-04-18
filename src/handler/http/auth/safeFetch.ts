@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type HttpMeth = 'GET' | 'post' | 'PUT' | 'DELETE';
+type HttpMeth = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /**
  *

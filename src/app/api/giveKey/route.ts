@@ -11,7 +11,7 @@ export async function GET() {
     return NextResponse.json({ message: 'have hash' });
   }
 
-  console.log('🚀 키 없음 → fetch 시도');
+  console.log(' 키 없음 → fetch 시도');
   const [keyResult, socketResult] = await Promise.allSettled([
     fetchingHTKey(),
     fetchingHTSocketKey(),

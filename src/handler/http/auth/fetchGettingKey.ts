@@ -1,6 +1,6 @@
-import { HantHeadersAccess } from '@util/types/HTHeaderType';
+import { HantHeadersAccess, HantHeadersAccessSocket } from '@util/types/HTHeaderType';
 import safeFetch from './safeFetch';
-import { AccessTokenRes, HashKeyRes, HashKeySocketRes } from '@util/types/authWithHantoo';
+import { HashKeyRes, HashKeySocketRes } from '@util/types/authWithHantoo';
 // only use in server
 
 const htKeyRaw = process.env.HanTKey;
@@ -27,14 +27,16 @@ export default async function fetchingHTKey() {
 }
 
 export async function fetchingHTSocketKey() {
-  const headers1: HantHeadersAccess = {
-    appkey: `Bearer ${htKey}`,
-    appsecret: htSec,
+  const headers1: HantHeadersAccessSocket = {
+    appkey: `${htKey}`,
+    secretkey: htSec,
     grant_type: 'client_credentials',
   };
   const reqUrl = `${BaseUrls}/oauth2/Approval`;
-  const TokenOBJ = await safeFetch<HashKeySocketRes>(reqUrl, 'GET', null, headers1);
-  console.log('get from ./..');
+  const TokenOBJ = await safeFetch<HashKeySocketRes>(reqUrl, 'POST', headers1, {
+    'content-type': 'application/json; utf-8',
+  });
+  console.log('get Socket from ./..');
   console.log(TokenOBJ);
   return TokenOBJ;
 }

@@ -13,3 +13,9 @@ export type HantHeadersAccess = {
   appkey: string;
   appsecret: string;
 };
+
+export type HantHeadersAccessSocket = {
+  grant_type: string;
+  appkey: string;
+  secretkey: string;
+};

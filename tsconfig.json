@@ -28,6 +28,13 @@
       "@types/*": ["src/util/types/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/giveKey"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "**/*.css.ts",
+    "src/app/api/giveKey"
+  ],
   "exclude": ["node_modules"]
 }
