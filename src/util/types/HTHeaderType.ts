@@ -19,3 +19,12 @@ export type HantHeadersAccessSocket = {
   appkey: string;
   secretkey: string;
 };
+
+export type HantHeadersMarketRank = {
+  authorization: string;
+  'content-type': string;
+  appkey: string;
+  appsecret: string;
+  tr_id: string;
+  custtype: string;
+};

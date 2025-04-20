@@ -18,7 +18,9 @@ export type HashKeyRes = {
 export type HashKeySocketRes = {
   approval_key: string;
 };
-
+export type HashKeyAccessTokenRes = {
+  access_token: string;
+};
 export type KeyPackage = {
   value: string;
   timestamp: number;
