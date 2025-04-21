@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getKey } from '@/util/cronFile/keyStore';
 import { NextApiRequest, NextApiResponse } from 'next';
-import getStockRankList from '@handler/http/gettingList/getStockRankList';
-
-const baseUrl: string | undefined = process.env.HantBaseUrl;
+import getStockAmountRankList from '@handler/http/gettingList/getStockAmountRankList';
 
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
   const key = getKey();
   if (key) {
-    const result = await getStockRankList();
+    const result = await getStockAmountRankList();
     return NextResponse.json({ result });
   }
 

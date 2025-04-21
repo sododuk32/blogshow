@@ -1,9 +1,9 @@
 import safeFetch from '../auth/safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
-import { StockListInfoRes } from '@util/types/StockListInfoRes';
+import { StockListInfoResOutput } from '@util/types/StockListInfoRes';
 
-export default async function getStockRankList() {
+export default async function getStockAmountRankList() {
   // 널 가드
   const key = getKey();
   const baseUrl: string | undefined = process.env.HantBaseRealUrl;
@@ -20,14 +20,14 @@ export default async function getStockRankList() {
     FID_BLNG_CLS_CODE: '0',
     FID_TRGT_CLS_CODE: '111111111',
     FID_TRGT_EXLS_CLS_CODE: '0000000000',
-    FID_INPUT_PRICE_1: '',
-    FID_INPUT_PRICE_2: '',
-    FID_VOL_CNT: '',
-    FID_INPUT_DATE_1: '',
+    // FID_INPUT_PRICE_1: '""',
+    // FID_INPUT_PRICE_2: '""',
+    // FID_VOL_CNT: '""',
+    // FID_INPUT_DATE_1: '""',
   };
 
   const headers: HantHeadersMarketRank = {
-    authorization: token,
+    authorization: `Bearer ${token}`,
     appkey: process.env.HanTKey || '',
     appsecret: process.env.HanTSecret || '',
     tr_id: 'FHPST01710000',
@@ -40,9 +40,18 @@ export default async function getStockRankList() {
   Object.entries(queryParams).forEach(([key, val]) => {
     after.searchParams.set(key, val);
   });
-  const resulturl = after.toString();
 
-  const results = await safeFetch<StockListInfoRes>(resulturl, 'GET', null, headers);
+  const rawAppend = [
+    'FID_INPUT_PRICE_1=""',
+    'FID_INPUT_PRICE_2=""',
+    'FID_VOL_CNT=""',
+    'FID_INPUT_DATE_1=""',
+  ].join('&');
+
+  const finalUrl = `${after.toString()}&${rawAppend}`;
+
+  console.log(finalUrl);
+  const results = await safeFetch<StockListInfoResOutput>(finalUrl, 'GET', null, headers);
 
   return results;
 }

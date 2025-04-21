@@ -19,7 +19,11 @@ export type HantHeadersAccessSocket = {
   appkey: string;
   secretkey: string;
 };
-
+/**
+ *
+ * 주의) @tr_id   요청문에 따라 값이 다를 수도있음. 상수가 아님.
+ * @authorization   Bearer 반드시 포함해야함.
+ */
 export type HantHeadersMarketRank = {
   authorization: string;
   'content-type': string;

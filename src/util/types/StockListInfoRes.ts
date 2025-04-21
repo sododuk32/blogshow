@@ -23,3 +23,12 @@ const stockKeys: string[] = [
 
 // Record를 써서 모든 필드를 string으로 매핑
 export type StockListInfoRes = Record<(typeof stockKeys)[number], string>;
+
+export type StockListInfoResOutput = {
+  result: {
+    output: Record<(typeof stockKeys)[number], string>[];
+    rt_cd: string;
+    msg_cd: string;
+    msg1: string;
+  };
+};
