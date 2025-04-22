@@ -1,6 +1,6 @@
 import { createGlobalThemeContract, createGlobalTheme } from '@vanilla-extract/css';
 
-export const vars = createGlobalThemeContract(
+export const globals = createGlobalThemeContract(
   {
     color: {
       brightRed: 'brightRed',
@@ -52,7 +52,7 @@ export const vars = createGlobalThemeContract(
   (value) => `${value}`
 );
 
-createGlobalTheme(':root', vars, {
+createGlobalTheme(':root', globals, {
   color: {
     brightRed: '#f04452',
     brightBlue: '#64afff20',

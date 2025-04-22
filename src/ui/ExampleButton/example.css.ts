@@ -1,49 +1,49 @@
 // src/button.css.ts
 import { recipe } from '@vanilla-extract/recipes';
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../styles/theme/theme.css';
+import { globals } from '../../styles/theme/theme.css';
 
 export const buttonEx = recipe({
   base: {
-    fontFamily: vars.font.body,
-    fontSize: vars.fontSize.fnm,
+    fontFamily: globals.font.body,
+    fontSize: globals.fontSize.fnm,
     padding: `10px`,
-    border: `1px solid ${vars.color.brightBlue}`,
+    border: `1px solid ${globals.color.brightBlue}`,
     borderRadius: '4px',
     cursor: 'pointer',
     transition: 'background-color 150ms ease-out',
-    backgroundColor: vars.backgroundColor.blue150,
+    backgroundColor: globals.backgroundColor.blue150,
     minWidth: '3vw',
   },
 
   variants: {
     intent: {
       primary: {
-        backgroundColor: vars.color.brightBlue,
-        color: vars.font.blueText,
+        backgroundColor: globals.color.brightBlue,
+        color: globals.font.blueText,
       },
       danger: {
-        backgroundColor: vars.color.brightBlue,
-        color: vars.font.grayText,
+        backgroundColor: globals.color.brightBlue,
+        color: globals.font.grayText,
       },
       neutral: {
-        backgroundColor: vars.backgroundColor.gray50,
-        color: vars.font.grayText,
+        backgroundColor: globals.backgroundColor.gray50,
+        color: globals.font.grayText,
       },
     },
 
     size: {
       small: {
-        fontSize: vars.fontSize.fsm,
-        padding: `${vars.spacing.xs} ${vars.spacing.s}`,
+        fontSize: globals.fontSize.fsm,
+        padding: `${globals.spacing.xs} ${globals.spacing.s}`,
       },
       medium: {
-        fontSize: vars.fontSize.fnm,
-        padding: `${vars.spacing.s} ${vars.spacing.s}`,
+        fontSize: globals.fontSize.fnm,
+        padding: `${globals.spacing.s} ${globals.spacing.s}`,
       },
       large: {
-        fontSize: vars.fontSize.fxl,
-        padding: `${vars.spacing.md} ${vars.spacing.lg}`,
+        fontSize: globals.fontSize.fxl,
+        padding: `${globals.spacing.md} ${globals.spacing.lg}`,
       },
     },
   },

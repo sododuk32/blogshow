@@ -13,6 +13,7 @@
   "dependencies": {
     "@vanilla-extract/babel-plugin": "^1.2.0",
     "@vanilla-extract/recipes": "^0.5.5",
+    "@vanilla-extract/sprinkles": "^1.6.3",
     "@vanilla-extract/webpack-plugin": "^2.3.18",
     "chart.js": "^4.4.9",
     "cheerio": "^1.0.0-rc.12",
