@@ -1,7 +1,6 @@
 import React from 'react';
-import MainListMenu from '@ui/MainListMenu';
 import { ExButton } from '@ui/ExampleButton/ExButton';
-
+import MainListMenu from '@ui/MainListMenu/MainList';
 export default function Page() {
   return (
     <div className="bg-red-500 text-white p-4">

@@ -7,12 +7,12 @@ export const globals = createGlobalThemeContract(
       brightBlue: 'brightBlue',
       hardRed: 'hardRed',
       slightBlue: 'slightBlue',
-    },
-    font: {
-      body: 'font-body',
       blueText: 'blueText',
       grayText: 'grayText',
       slightgrayText: 'slightgrayText',
+    },
+    font: {
+      body: 'font-body',
     },
     fontSize: {
       fxs: 'fxs',
@@ -58,12 +58,12 @@ createGlobalTheme(':root', globals, {
     brightBlue: '#64afff20',
     hardRed: '#f04452',
     slightBlue: '#3182f',
-  },
-  font: {
-    body: 'arial',
     blueText: '#64a8ff',
     grayText: '#4e5968',
     slightgrayText: '#6b7684',
+  },
+  font: {
+    body: 'arial',
   },
   fontSize: {
     fxs: '12px',
