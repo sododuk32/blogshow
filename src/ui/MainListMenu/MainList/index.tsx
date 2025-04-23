@@ -28,7 +28,6 @@ export function ListProvider({ children }: { children: ReactNode }) {
     queryFn: () => getMainListData(listCategory),
     refetchOnWindowFocus: false,
     refetchInterval: 60000,
-    // (선택) staleTime, cacheTime 등 추가 옵션 가능
   });
 
   return (

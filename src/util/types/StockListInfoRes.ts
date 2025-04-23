@@ -29,14 +29,13 @@ export type StockListInfoRes = Record<(typeof stockKeys)[number], string>;
  * results.data.output
  */
 export type StockListInfoResOutput = {
-  output: any;
-  // Record<(typeof stockKeys)[number], string>[]
+  data: Record<(typeof stockKeys)[number], string>[];
   rt_cd: string;
   msg_cd: string;
   msg1: string;
 };
 export type mainMenuData = {
-  data_rank: number;
+  data_rank: string;
   hts_kor_isnm: string;
   stck_prpr: string;
   prdy_vrss_sign: string;
@@ -45,7 +44,7 @@ export type mainMenuData = {
   acml_vol: string;
 };
 export interface StockResOutput {
-  data: mainMenuData;
+  data: mainMenuData[];
   rt_cd: string;
   msg_cd: string;
   msg1: string;
