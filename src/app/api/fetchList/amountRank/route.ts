@@ -6,8 +6,12 @@ import getStockAmountRankList from '@handler/http/gettingList/getStockAmountRank
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
   const key = getKey();
   if (key) {
-    const result = await getStockAmountRankList();
-    return NextResponse.json({ result });
+    const response = await getStockAmountRankList();
+
+    if (response?.message !== 'good') {
+      return res.status(400).json({ message: response.message || 'error' });
+    }
+    return NextResponse.json(response);
   }
 
   return res.status(400).json({ message: 'no key to fetch' });

@@ -24,4 +24,5 @@ export type HashKeyAccessTokenRes = {
 export type KeyPackage = {
   value: string;
   timestamp: number;
+  type: string;
 };

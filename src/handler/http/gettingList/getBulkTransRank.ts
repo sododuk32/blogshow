@@ -3,6 +3,11 @@ import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
 import { StockListInfoResOutput } from '@util/types/StockListInfoRes';
 
+/**
+ * 대량체결건수 순위
+ * @param mode
+ * @returns
+ */
 export default async function getBulkTransRank() {
   const key = getKey();
   const baseUrl: string | undefined = process.env.HantBaseRealUrl;
@@ -57,5 +62,14 @@ export default async function getBulkTransRank() {
 
   const results = await safeFetch<StockListInfoResOutput>(url.toString(), 'GET', null, headers);
 
-  return results;
+  if (results.error) {
+    return { data: [], message: `${results.error.status}`, status: results.error.status };
+  }
+  const { output } = results.data;
+
+  return {
+    data: output,
+    message: `good`,
+    status: 200,
+  };
 }

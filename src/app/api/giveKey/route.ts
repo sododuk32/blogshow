@@ -12,36 +12,34 @@ export async function GET() {
 
   if (!key.valid) {
     console.log('키가 없거나 만료됨');
-    return NextResponse.json({ message: 'no valid key' }, { status: 404 });
+
+    console.log(' 키 없음 → fetch 시도');
+    const [keyResult, socketResult, AcKey] = await Promise.allSettled([
+      fetchingHTKey(),
+      fetchingHTSocketKey(),
+      fetchingHTAccessToken(),
+    ]);
+
+    const now = () => new Date().getTime();
+    const packages: KeyPackage[] = [];
+
+    if (keyResult.status === 'fulfilled' && keyResult.value?.HASH) {
+      packages.push({ value: keyResult.value.HASH, timestamp: now(), type: 'hash' });
+    }
+
+    if (socketResult.status === 'fulfilled' && socketResult.value?.approval_key) {
+      packages.push({ value: socketResult.value.approval_key, timestamp: now(), type: 'socket' });
+    }
+
+    if (AcKey.status === 'fulfilled' && AcKey.value?.access_token) {
+      packages.push({ value: AcKey.value.access_token, timestamp: now(), type: 'accessKey' });
+    }
+
+    if (packages.length > 0) {
+      setKey(packages); // 🔐 저장
+      return NextResponse.json({ message: 'get new keys' });
+    }
   }
 
-  console.log(' 키 없음 → fetch 시도');
-  const [keyResult, socketResult, AcKey] = await Promise.allSettled([
-    fetchingHTKey(),
-    fetchingHTSocketKey(),
-    fetchingHTAccessToken(),
-  ]);
-
-  const now = () => new Date().getTime();
-  const packages: KeyPackage[] = [];
-
-  console.log(keyResult);
-  if (keyResult.status === 'fulfilled' && keyResult.value?.HASH) {
-    packages.push({ value: keyResult.value.HASH, timestamp: now() });
-  }
-
-  if (socketResult.status === 'fulfilled' && socketResult.value?.approval_key) {
-    packages.push({ value: socketResult.value.approval_key, timestamp: now() });
-  }
-
-  if (AcKey.status === 'fulfilled' && AcKey.value?.access_token) {
-    packages.push({ value: AcKey.value.access_token, timestamp: now() });
-  }
-
-  if (packages.length > 0) {
-    setKey(packages); // 🔐 저장
-    return NextResponse.json({ message: 'get new keys' });
-  }
-
-  return NextResponse.json({ message: 'no' });
+  return NextResponse.json({ message: 'have key' });
 }

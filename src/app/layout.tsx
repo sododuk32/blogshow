@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
 import React from 'react';
+import QueryProviders from '@handler/providers/tanstackQuery/QueryProviders';
 
 export const metadata: Metadata = {
   title: 'My App',
@@ -10,9 +11,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className="bg-black text-white p-10">
-        <h1 className="text-4xl font-bold">Tailwind 작동 테스트 🎯 gsS9d ls</h1>
-        {children}
+      <body className=" text-white p-10">
+        <QueryProviders>{children}</QueryProviders>
       </body>
     </html>
   );

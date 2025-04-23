@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { HantHeadersAccess, HantHeadersAccessSocket } from '@util/types/HTHeaderType';
 import safeFetch from './safeFetch';
 import { HashKeyRes, HashKeySocketRes, HashKeyAccessTokenRes } from '@util/types/authWithHantoo';
@@ -36,12 +37,10 @@ export async function fetchingHTSocketKey() {
     grant_type: 'client_credentials',
   };
   const reqUrl = `${HanRealUrl}/oauth2/Approval`;
-  const TokenOBJ = await (<HashKeySocketRes>(reqUrl,
-  'POST',
-  headers1,
-  {
+  const TokenOBJ = safeFetch<HashKeySocketRes>(reqUrl, 'POST', headers1, {
     'content-type': 'application/json; utf-8',
-  }));
+  });
+
   console.log('get Socket from ./..');
   console.log(TokenOBJ);
   return TokenOBJ;

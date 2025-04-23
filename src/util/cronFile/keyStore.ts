@@ -16,7 +16,6 @@ export function setKey(key: KeyPackage[]) {
     try {
       const raw = fs.readFileSync(filePath, 'utf-8');
       const existing: KeyPackage[] = JSON.parse(raw);
-      console.log(existing);
 
       const now = Date.now(); // 보장용
       const notExpired = (pkg: KeyPackage | undefined) =>
@@ -59,13 +58,13 @@ export function setKey(key: KeyPackage[]) {
   }
 
   // 수정
+  console.log('전달받은 키 ');
   console.log(key);
   const data: KeyPackage[] = [
-    { value: key[0].value, timestamp: now },
-    { value: key[1].value, timestamp: now },
-    { value: key[2].value, timestamp: now },
+    { ...key[0], value: key[0].value, timestamp: now },
+    { ...key[0], value: key[1].value, timestamp: now },
+    { ...key[0], value: key[2].value, timestamp: now },
   ];
-  console.log(data);
 
   fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
   console.log('[setKey] key 저장 완료');

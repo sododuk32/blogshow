@@ -6,8 +6,12 @@ import getFlucTuationRank from '@/handler/http/gettingList/getFlucTuationRank';
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
   const key = getKey();
   if (key) {
-    const result = await getFlucTuationRank();
-    return NextResponse.json({ result });
+    const response = await getFlucTuationRank();
+
+    if (response?.message !== 'good') {
+      return res.status(400).json({ message: response.message || 'error' });
+    }
+    return NextResponse.json(response);
   }
 
   return res.status(400).json({ message: 'no key to fetch' });

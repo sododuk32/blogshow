@@ -3,6 +3,12 @@ import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
 import { StockListInfoRes } from '@util/types/StockListInfoRes';
 
+/**
+ * 시가총액 순위
+ * @param mode
+ * @returns
+ */
+
 export default async function getStockMarketValueRankList() {
   const key = getKey();
   const baseUrl: string | undefined = process.env.HantBaseRealUrl;
@@ -46,8 +52,16 @@ export default async function getStockMarketValueRankList() {
     'content-type': 'application/json; utf-8',
   };
 
-  console.log(finalUrl);
   const results = await safeFetch<StockListInfoRes>(finalUrl, 'GET', null, headers);
 
-  return results;
+  if (results.error) {
+    return { data: [], message: `${results.error.status}`, status: results.error.status };
+  }
+  const { output } = results.data;
+
+  return {
+    data: output,
+    message: `good`,
+    status: 200,
+  };
 }

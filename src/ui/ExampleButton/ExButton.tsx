@@ -11,7 +11,7 @@ export function ExButton({
 }) {
   return (
     <button className={`${buttonReset} ${buttonEx({ size })}`} {...props}>
-      11 {children}
+      {children}
     </button>
   );
 }

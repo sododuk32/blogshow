@@ -1,8 +1,13 @@
 import safeFetch from '../auth/safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
+import { FetchResult } from '@util/types/ErrorTypes';
 import { StockListInfoResOutput } from '@util/types/StockListInfoRes';
-
+/**
+ * 급상승 급하락 순위
+ * @param mode
+ * @returns
+ */
 export default async function getFlucTuationRank(mode?: string) {
   const selectedMode = mode || '0';
   const key = getKey();
@@ -14,7 +19,7 @@ export default async function getFlucTuationRank(mode?: string) {
 
   const token = key.data[2].value;
 
-  const url = new URL(`${baseUrl}/uapi/domestic-stock/v1/ranking/bulk-trans-num`);
+  const url = new URL(`${baseUrl}/uapi/domestic-stock/v1/ranking/fluctuation`);
 
   // 일반 필드
   const baseParams: Record<string, string> = {
@@ -57,5 +62,14 @@ export default async function getFlucTuationRank(mode?: string) {
 
   const results = await safeFetch<StockListInfoResOutput>(url.toString(), 'GET', null, headers);
 
-  return results;
+  if (results.error) {
+    return { data: [], message: `${results.error.status}`, status: results.error.status };
+  }
+  const { output } = results.data;
+
+  return {
+    data: output,
+    message: `good`,
+    status: 200,
+  };
 }

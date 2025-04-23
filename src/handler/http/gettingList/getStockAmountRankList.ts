@@ -1,8 +1,15 @@
 import safeFetch from '../auth/safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
+import { FetchResult } from '@util/types/ErrorTypes';
 import { StockListInfoResOutput } from '@util/types/StockListInfoRes';
+import { Console } from 'console';
 
+/**
+ * 거래량 순위
+ * @param mode
+ * @returns
+ */
 export default async function getStockAmountRankList() {
   // 널 가드
   const key = getKey();
@@ -34,6 +41,7 @@ export default async function getStockAmountRankList() {
     custtype: 'P',
     'content-type': 'application/json; utf-8',
   };
+
   const before = `${baseUrl}/uapi/domestic-stock/v1/quotations/volume-rank`;
 
   const after = new URL(before);
@@ -50,8 +58,16 @@ export default async function getStockAmountRankList() {
 
   const finalUrl = `${after.toString()}&${rawAppend}`;
 
-  console.log(finalUrl);
   const results = await safeFetch<StockListInfoResOutput>(finalUrl, 'GET', null, headers);
 
-  return results;
+  if (results.error) {
+    return { data: [], message: `${results.error.status}`, status: results.error.status };
+  }
+  const { output } = results.data;
+
+  return {
+    data: output,
+    message: `good`,
+    status: 200,
+  };
 }

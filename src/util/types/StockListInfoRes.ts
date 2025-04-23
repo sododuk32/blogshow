@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const stockKeys: string[] = [
   'hts_kor_isnm',
@@ -24,11 +25,28 @@ const stockKeys: string[] = [
 // Record를 써서 모든 필드를 string으로 매핑
 export type StockListInfoRes = Record<(typeof stockKeys)[number], string>;
 
+/**
+ * results.data.output
+ */
 export type StockListInfoResOutput = {
-  result: {
-    output: Record<(typeof stockKeys)[number], string>[];
-    rt_cd: string;
-    msg_cd: string;
-    msg1: string;
-  };
+  output: any;
+  // Record<(typeof stockKeys)[number], string>[]
+  rt_cd: string;
+  msg_cd: string;
+  msg1: string;
 };
+export type mainMenuData = {
+  data_rank: number;
+  hts_kor_isnm: string;
+  stck_prpr: string;
+  prdy_vrss_sign: string;
+  prdy_vrss: string;
+  prdy_ctrt: string;
+  acml_vol: string;
+};
+export interface StockResOutput {
+  data: mainMenuData;
+  rt_cd: string;
+  msg_cd: string;
+  msg1: string;
+}

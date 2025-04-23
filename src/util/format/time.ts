@@ -4,5 +4,5 @@ export function timeToKo(time: Date): string {
   const min = time.getMinutes();
   const hours = time.getHours();
 
-  return `현재 ${month}월 ${day}일 ${hours}시 ${min}`;
+  return `현재 ${month}월 ${day}일 ${hours}시 ${min}분`;
 }
