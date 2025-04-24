@@ -39,7 +39,7 @@ export default async function getStockAmountRankList() {
     appsecret: process.env.HanTSecret || '',
     tr_id: 'FHPST01710000',
     custtype: 'P',
-    'content-type': 'application/json; utf-8',
+    'content-type': 'application/json',
   };
 
   const before = `${baseUrl}/uapi/domestic-stock/v1/quotations/volume-rank`;

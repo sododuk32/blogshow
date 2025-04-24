@@ -49,7 +49,7 @@ export default async function getStockMarketValueRankList() {
     appsecret: process.env.HanTSecret || '',
     tr_id: 'FHPST01790000',
     custtype: 'P',
-    'content-type': 'application/json; utf-8',
+    'content-type': 'application/json',
   };
 
   const results = await safeFetch<StockListInfoRes>(finalUrl, 'GET', null, headers);

@@ -2,25 +2,34 @@ import React from 'react';
 
 function MainList_Table({
   data,
-  extra1,
-  extra2,
+  optional1,
+  optional2,
 }: {
-  data: string[];
-  extra1: string;
-  extra2: string;
+  data: Record<string, string>[] | undefined;
+  optional1: string;
+  optional2: string;
 }) {
+  console.log(data);
   return (
     <table>
       <thead>
         <tr>
           <th colSpan={2}>종목</th>
           <th colSpan={1}>현재가</th>
-          <th colSpan={1}>{extra1}</th>
+          <th colSpan={1}>{optional1}</th>
           <th colSpan={1} className="text-blue-600">
-            {extra2}
+            {optional2}
           </th>
         </tr>
       </thead>
+      <tbody>
+        <tr>
+          {/* {data &&
+            Object.keys(data).map((key: string) => {
+              return {};
+            })} */}
+        </tr>
+      </tbody>
     </table>
   );
 }

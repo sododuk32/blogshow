@@ -57,7 +57,7 @@ export default async function getBulkTransRank() {
     appsecret: process.env.HanTSecret || '',
     tr_id: 'FHKST190900C0',
     custtype: 'P',
-    'content-type': 'application/json; utf-8',
+    'content-type': 'application/json',
   };
 
   const results = await safeFetch<StockListInfoResOutput>(url.toString(), 'GET', null, headers);

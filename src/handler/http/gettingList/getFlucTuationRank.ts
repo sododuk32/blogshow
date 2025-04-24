@@ -57,7 +57,7 @@ export default async function getFlucTuationRank(mode?: string) {
     appsecret: process.env.HanTSecret || '',
     tr_id: 'FHPST01700000', // 트랜잭션 ID 확인됨
     custtype: 'P',
-    'content-type': 'application/json; utf-8',
+    'content-type': 'application/json',
   };
 
   const results = await safeFetch<StockListInfoResOutput>(url.toString(), 'GET', null, headers);

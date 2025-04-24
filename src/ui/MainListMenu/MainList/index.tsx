@@ -6,6 +6,7 @@ import { createContext, useContext } from 'react';
 import MainList_Table from '../MainList_Table';
 import { useQuery } from '@tanstack/react-query';
 import getMainListData from '@handler/http/gettingList/getListof';
+import { StockListInfoResOutput } from '../../../util/types/StockListInfoRes';
 
 type MainListType = {
   listCategory: string | null;
@@ -14,6 +15,8 @@ type MainListType = {
   setListCategory: (listCategory: string | null) => void;
   setPage: (page: string | number | null) => void;
   setListData: (list: string[] | null) => void;
+  data: StockListInfoResOutput | undefined;
+  error: Error | null;
 };
 
 const ListContext = createContext<MainListType | null>(null);
@@ -39,6 +42,8 @@ export function ListProvider({ children }: { children: ReactNode }) {
         setPage,
         listData,
         setListData,
+        data,
+        error,
       }}
     >
       {children}
@@ -46,21 +51,26 @@ export function ListProvider({ children }: { children: ReactNode }) {
   );
 }
 
-function MainListMenu() {
+function InnerMainListMenu() {
+  const { data } = useListContext();
   return (
-    <ListProvider>
-      <div className={box}>
-        <MainNavBar />
-        {/* <MainList_Table /> */}
-      </div>
-    </ListProvider>
+    <div className={box}>
+      <MainNavBar />
+      <MainList_Table data={data?.data} optional1="2" optional2="3" />
+    </div>
   );
 }
-
-export default MainListMenu;
 
 export function useListContext() {
   const ctx = useContext(ListContext);
   if (!ctx) throw new Error('useListContext must be used within ListProvider');
   return ctx;
+}
+
+export default function MainListMenu() {
+  return (
+    <ListProvider>
+      <InnerMainListMenu />
+    </ListProvider>
+  );
 }

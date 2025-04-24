@@ -22,11 +22,11 @@ const stockKeys: string[] = [
   'acml_tr_pbmn',
 ] as const;
 
-// Record를 써서 모든 필드를 string으로 매핑
+// Record를 써서 사용되는 필드를 string으로 매핑
 export type StockListInfoRes = Record<(typeof stockKeys)[number], string>;
 
 /**
- * results.data.output
+ * 한투 서버 응답값 공통 리턴 객체 타입
  */
 export type StockListInfoResOutput = {
   data: Record<(typeof stockKeys)[number], string>[];
@@ -34,18 +34,58 @@ export type StockListInfoResOutput = {
   msg_cd: string;
   msg1: string;
 };
+
+// ---------------------------------------------------------------
+
+// 리스트 응답에서 모든 종류에서 공통적으로 가져와야할 파라미터.
 export type mainMenuData = {
+  /** 해당 지표 순위 */
   data_rank: string;
+  /** 한국어 회사명 */
   hts_kor_isnm: string;
+  /** 현재가 */
   stck_prpr: string;
+  /** 전일 대비 (부호) */
   prdy_vrss_sign: string;
+  /** 전일 대비 (절대값) */
   prdy_vrss: string;
+  /** 전일 대비 ( 퍼센트) */
   prdy_ctrt: string;
+  /** 누적 거래량 */
   acml_vol: string;
 };
+
+/**
+ * 한투 서버 응답값 공통 리턴 객체 타입
+ */
 export interface StockResOutput {
   data: mainMenuData[];
   rt_cd: string;
   msg_cd: string;
   msg1: string;
+}
+
+interface ListExtraFields {
+  거래량: {
+    /** 거래량 증가율*/
+    vol_inrt: string;
+    /** 거래량 회전율*/
+    vol_tnrt: string;
+
+    /** 누적 거래 대금 */
+    acml_tr_pbmn: string;
+    /** 평균 거래량 */
+    avrg_vol: string;
+  };
+  시가총액: {
+    /**시가총액 */ stck_avls: string;
+  };
+
+  급상승: {
+    /**절대 등락 수치*/ prd_rsfl: string;
+    /**등락 비율 % */ prd_rsfl_rate: string;
+  };
+  급하락: { /**절대 등락 수치*/ prd_rsfl: string; /**등락 비율 % */ prd_rsfl_rate: string };
+
+  대량체결건수: { /**대량매수*/ shnu_cntg_csnu: string; /**대량매도*/ seln_cntg_csnu: string };
 }
