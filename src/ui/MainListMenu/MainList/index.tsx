@@ -6,29 +6,26 @@ import { createContext, useContext } from 'react';
 import MainList_Table from '../MainList_Table';
 import { useQuery } from '@tanstack/react-query';
 import getMainListData from '@handler/http/gettingList/getListof';
-import { StockListInfoResOutput } from '../../../util/types/StockListInfoRes';
+import { MainMenuAlltype, KeyofMainMenu } from '../../../util/types/StockListInfoRes';
 
-type MainListType = {
-  listCategory: string | null;
+type MainListType<T extends KeyofMainMenu> = {
+  listCategory: T | null;
   page: string | number | null;
-  listData: string[] | null;
-  setListCategory: (listCategory: string | null) => void;
   setPage: (page: string | number | null) => void;
   setListData: (list: string[] | null) => void;
-  data: StockListInfoResOutput | undefined;
+  data: MainMenuAlltype<T>[];
   error: Error | null;
 };
 
-const ListContext = createContext<MainListType | null>(null);
+const ListContext = createContext<MainListType<KeyofMainMenu> | null>(null);
 
 export function ListProvider({ children }: { children: ReactNode }) {
-  const [listCategory, setListCategory] = useState<string | null>('거래량');
+  const [listCategory, setListCategory] = useState<KeyofMainMenu | null>('거래량');
   const [page, setPage] = useState<string | number | null>(1);
-  const [listData, setListData] = useState<string[] | null>(null);
 
   const { data, error, status } = useQuery({
     queryKey: ['getList', listCategory],
-    queryFn: () => getMainListData(listCategory),
+    queryFn: () => getMainListData(listCategory as KeyofMainMenu),
     refetchOnWindowFocus: false,
     refetchInterval: 60000,
   });
@@ -40,8 +37,6 @@ export function ListProvider({ children }: { children: ReactNode }) {
         setListCategory,
         page,
         setPage,
-        listData,
-        setListData,
         data,
         error,
       }}
@@ -52,11 +47,12 @@ export function ListProvider({ children }: { children: ReactNode }) {
 }
 
 function InnerMainListMenu() {
-  const { data } = useListContext();
+  const { data, listCategory } = useListContext();
   return (
     <div className={box}>
+      ㅗ{listCategory}ㅗ
       <MainNavBar />
-      <MainList_Table data={data?.data} optional1="2" optional2="3" />
+      <MainList_Table category={listCategory} data={data} optional1="2" optional2="3" />
     </div>
   );
 }

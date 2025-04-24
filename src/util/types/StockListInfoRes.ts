@@ -28,14 +28,30 @@ export type StockListInfoRes = Record<(typeof stockKeys)[number], string>;
 /**
  * 한투 서버 응답값 공통 리턴 객체 타입
  */
-export type StockListInfoResOutput = {
-  data: Record<(typeof stockKeys)[number], string>[];
+export type StockListInfoResOutput<Category extends keyof mainMenuDataExtra> = {
+  /** 원래는 Record<(typeof stockKeys)[number], string>[]; */
+  data: MainMenuAlltype<Category>[];
   rt_cd: string;
   msg_cd: string;
   msg1: string;
 };
 
 // ---------------------------------------------------------------
+
+/**
+ * 한투 서버 응답값 공통 리턴 객체 타입
+ */
+export interface StockResOutput<T extends KeyofMainMenu> {
+  data: MainMenuAlltype<T>[];
+  rt_cd: string;
+  msg_cd: string;
+  msg1: string;
+}
+
+export type KeyofMainMenu = keyof mainMenuDataExtra;
+export type MainMenuAlltype<T extends KeyofMainMenu> = mainMenuData & mainMenuDataExtra[T];
+
+// db같이 조인해서 쓰면됨.
 
 // 리스트 응답에서 모든 종류에서 공통적으로 가져와야할 파라미터.
 export type mainMenuData = {
@@ -56,16 +72,9 @@ export type mainMenuData = {
 };
 
 /**
- * 한투 서버 응답값 공통 리턴 객체 타입
+ * 메인 리스트에서 추가적으로 적용할 타입을 모아둔 인터페이스.
  */
-export interface StockResOutput {
-  data: mainMenuData[];
-  rt_cd: string;
-  msg_cd: string;
-  msg1: string;
-}
-
-interface ListExtraFields {
+export interface mainMenuDataExtra {
   거래량: {
     /** 거래량 증가율*/
     vol_inrt: string;
@@ -89,3 +98,4 @@ interface ListExtraFields {
 
   대량체결건수: { /**대량매수*/ shnu_cntg_csnu: string; /**대량매도*/ seln_cntg_csnu: string };
 }
+// 이부분 type과 interface 조건부 병합할수있게해야함.

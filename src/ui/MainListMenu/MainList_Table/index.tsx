@@ -1,11 +1,14 @@
 import React from 'react';
+import { MainMenuAlltype } from '../../../util/types/StockListInfoRes';
 
 function MainList_Table({
+  category = '거래량',
   data,
   optional1,
   optional2,
 }: {
-  data: Record<string, string>[] | undefined;
+  category: string | null;
+  data: unknown;
   optional1: string;
   optional2: string;
 }) {
