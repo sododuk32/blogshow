@@ -1,40 +1,55 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { MainMenuAlltype } from '../../../util/types/StockListInfoRes';
+import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from '@tanstack/react-table';
+import { BarLoader } from 'react-spinners';
 
-function MainList_Table({
-  category = '거래량',
-  data,
-  optional1,
-  optional2,
-}: {
-  category: string | null;
-  data: unknown;
-  optional1: string;
-  optional2: string;
-}) {
-  console.log(data);
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th colSpan={2}>종목</th>
-          <th colSpan={1}>현재가</th>
-          <th colSpan={1}>{optional1}</th>
-          <th colSpan={1} className="text-blue-600">
-            {optional2}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          {/* {data &&
-            Object.keys(data).map((key: string) => {
-              return {};
-            })} */}
-        </tr>
-      </tbody>
-    </table>
-  );
+interface MainListTableProps<T> {
+  category?: string | null;
+  columns: any;
+  data: T[]; // ← 여기는 T[]
+  isLoadings: boolean;
 }
 
-export default MainList_Table;
+export default function MainList_Table<T>({
+  category = '거래량',
+  columns,
+  data,
+  isLoadings,
+}: MainListTableProps<T>): JSX.Element {
+  const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
+
+  if (!data || isLoadings) {
+    return (
+      <div>
+        <BarLoader color="#000000" loading aria-label="Loading Spinner" data-testid="loader" />
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h2>{category}</h2>
+      <table>
+        <thead>
+          {table.getHeaderGroups().map((hg) => (
+            <tr key={hg.id}>
+              {hg.headers.map((header) => (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

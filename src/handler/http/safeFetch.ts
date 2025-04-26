@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FetchErrorDetail, FetchResult } from '../../../util/types/ErrorTypes';
+import { FetchErrorDetail, FetchResult } from '../../util/types/ErrorTypes';
 
 type HttpMeth = 'GET' | 'POST' | 'PUT' | 'DELETE';
 

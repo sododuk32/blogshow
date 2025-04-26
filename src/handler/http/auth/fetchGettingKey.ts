@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { HantHeadersAccess, HantHeadersAccessSocket } from '@util/types/HTHeaderType';
-import safeFetch from './safeFetch';
+import safeFetch from '../safeFetch';
 import { HashKeyRes, HashKeySocketRes, HashKeyAccessTokenRes } from '@util/types/authWithHantoo';
 import { FetchErrorDetail } from '../../../util/types/ErrorTypes';
 

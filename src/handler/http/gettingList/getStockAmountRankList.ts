@@ -1,8 +1,8 @@
-import safeFetch from '../auth/safeFetch';
+import safeFetch from '../safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
 import { FetchResult } from '@util/types/ErrorTypes';
-import { StockListInfoResOutput } from '@util/types/StockListInfoRes';
+import { StockListInfoRes } from '@util/types/StockListInfoRes';
 import { Console } from 'console';
 
 /**
@@ -58,12 +58,12 @@ export default async function getStockAmountRankList() {
 
   const finalUrl = `${after.toString()}&${rawAppend}`;
 
-  const results = await safeFetch<StockListInfoResOutput>(finalUrl, 'GET', null, headers);
+  const { data, error } = await safeFetch<StockListInfoRes>(finalUrl, 'GET', null, headers);
 
-  if (results.error) {
-    return { data: [], message: `${results.error.status}`, status: results.error.status };
+  if (error) {
+    return { data: [], message: `${error.status}`, status: error.status };
   }
-  const { output } = results.data;
+  const { output } = data;
 
   return {
     data: output,

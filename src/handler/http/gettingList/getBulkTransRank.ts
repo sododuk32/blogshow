@@ -1,7 +1,7 @@
-import safeFetch from '../auth/safeFetch';
+import safeFetch from '../safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
-import { StockListInfoResOutput } from '@util/types/StockListInfoRes';
+import { StockListInfoRes } from '@util/types/StockListInfoRes';
 
 /**
  * 대량체결건수 순위
@@ -60,12 +60,12 @@ export default async function getBulkTransRank() {
     'content-type': 'application/json',
   };
 
-  const results = await safeFetch<StockListInfoResOutput>(url.toString(), 'GET', null, headers);
+  const { data, error } = await safeFetch<StockListInfoRes>(url.toString(), 'GET', null, headers);
 
-  if (results.error) {
-    return { data: [], message: `${results.error.status}`, status: results.error.status };
+  if (error) {
+    return { data: [], message: `${error.status}`, status: error.status };
   }
-  const { output } = results.data;
+  const { output } = data;
 
   return {
     data: output,

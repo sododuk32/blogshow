@@ -98,4 +98,3 @@ export interface mainMenuDataExtra {
 
   대량체결건수: { /**대량매수*/ shnu_cntg_csnu: string; /**대량매도*/ seln_cntg_csnu: string };
 }
-// 이부분 type과 interface 조건부 병합할수있게해야함.
