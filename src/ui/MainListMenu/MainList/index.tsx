@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import getMainListData from '@handler/http/gettingList/getListof';
 import { MainMenuAlltype, KeyofMainMenu, mainMenuDataExtra } from '@util/types/StockListInfoRes';
 import { createListContext } from '@handler/providers/Listprovider/TableProviders';
-import { columnsMap } from '@ui/MainListMenu/Table_Definitions/mainTableAssem';
+import { columnsMap } from '../Table_Definitions/mainTableAssemble';
 
 export const { ListProvider, useListContext } = createListContext<KeyofMainMenu, mainMenuDataExtra>(
   {
@@ -26,7 +26,6 @@ function InnerMainListMenu() {
 
   return (
     <div className={box}>
-      {listCategory}
       <MainNavBar />
       {
         <MainList_Table
