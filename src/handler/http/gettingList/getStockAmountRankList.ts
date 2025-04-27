@@ -59,7 +59,7 @@ export default async function getStockAmountRankList() {
   const finalUrl = `${after.toString()}&${rawAppend}`;
 
   const { data, error } = await safeFetch<StockListInfoRes>(finalUrl, 'GET', null, headers);
-
+  console.log(finalUrl);
   if (error) {
     return { data: [], message: `${error.status}`, status: error.status };
   }

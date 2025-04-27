@@ -2,6 +2,7 @@
 import React from 'react';
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from '@tanstack/react-table';
 import { BarLoader } from 'react-spinners';
+import { tableStyle, cellStyle } from './index.css';
 
 interface MainListTableProps<T> {
   category?: string | null;
@@ -28,12 +29,12 @@ export default function MainList_Table<T>({
   return (
     <div>
       <h2>{category}</h2>
-      <table>
+      <table className={tableStyle}>
         <thead>
           {table.getHeaderGroups().map((hg) => (
             <tr key={hg.id}>
               {hg.headers.map((header) => (
-                <th key={header.id} colSpan={header.colSpan}>
+                <th key={header.id} colSpan={header.colSpan} className={cellStyle}>
                   {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
@@ -44,7 +45,9 @@ export default function MainList_Table<T>({
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                <td key={cell.id} className={cellStyle}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
             </tr>
           ))}

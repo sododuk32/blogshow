@@ -34,7 +34,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       if (socketResult.status === 'fulfilled' && socketResult.value?.approval_key) {
         packages.push({ value: socketResult.value.approval_key, timestamp: now(), type: 'socket' });
       }
-
+      console.log(AcKey);
       if (AcKey.status === 'fulfilled' && AcKey.value?.access_token) {
         packages.push({ value: AcKey.value.access_token, timestamp: now(), type: 'accessKey' });
       }

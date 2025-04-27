@@ -23,7 +23,7 @@ export default async function getStockMarketValueRankList() {
   const baseParams: Record<string, string> = {
     fid_blng_cls_code: '0',
     fid_cond_mrkt_div_code: 'J',
-    fid_cond_scr_div_code: '20179',
+    fid_cond_scr_div_code: '20174',
     fid_div_cls_code: '0',
     fid_input_iscd: '0001',
     fid_input_option_1: '2023',
@@ -33,7 +33,7 @@ export default async function getStockMarketValueRankList() {
     fid_trgt_exls_cls_code: '0',
   };
 
-  const after = new URL(`${baseUrl}/uapi/domestic-stock/v1/ranking/market-value`);
+  const after = new URL(`${baseUrl}/uapi/domestic-stock/v1/ranking/market-cap`);
   Object.entries(baseParams).forEach(([key, val]) => {
     after.searchParams.set(key, val);
   });
@@ -47,7 +47,7 @@ export default async function getStockMarketValueRankList() {
     authorization: `Bearer ${token}`,
     appkey: process.env.HanTKey || '',
     appsecret: process.env.HanTSecret || '',
-    tr_id: 'FHPST01790000',
+    tr_id: 'FHPST01740000',
     custtype: 'P',
     'content-type': 'application/json',
   };

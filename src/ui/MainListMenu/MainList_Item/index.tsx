@@ -1,7 +1,16 @@
 import React from 'react';
+import { cellStyleItem } from './index.css';
 
-function index() {
-  return <div>index</div>;
+function TableCells({
+  children,
+  styleString,
+}: {
+  children: React.ReactNode;
+  styleString?: string | null;
+}) {
+  return (
+    <div className={`${cellStyleItem} ${styleString ? ` ${styleString}` : ''}`}>{children}</div>
+  );
 }
 
-export default index;
+export default TableCells;

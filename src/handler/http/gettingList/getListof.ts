@@ -37,16 +37,18 @@ export default async function getMainListData<T extends KeyofMainMenu>(
   }
   const mapper = extraMappers[menu] as (p: any) => mainMenuDataExtra[T];
 
-  const mapped: MainMenuAlltype<T>[] = raw.data.map((props) => ({
-    data_rank: props.data_rank,
-    hts_kor_isnm: props.hts_kor_isnm,
-    stck_prpr: props.stck_prpr,
-    prdy_vrss_sign: props.prdy_vrss_sign,
-    prdy_vrss: props.prdy_vrss,
-    prdy_ctrt: props.prdy_ctrt,
-    acml_vol: props.acml_vol,
-    ...mapper(props), // T별 추가 필드 병합
-  }));
+  const mapped: MainMenuAlltype<T>[] = raw.data
+    .map((props) => ({
+      data_rank: props.data_rank,
+      hts_kor_isnm: props.hts_kor_isnm,
+      stck_prpr: props.stck_prpr,
+      prdy_vrss_sign: props.prdy_vrss_sign,
+      prdy_vrss: props.prdy_vrss,
+      prdy_ctrt: props.prdy_ctrt,
+      acml_vol: props.acml_vol,
+      ...mapper(props), // T별 추가 필드 병합
+    }))
+    .slice(0, 15);
 
   return mapped;
 }

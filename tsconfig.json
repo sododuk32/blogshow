@@ -25,7 +25,8 @@
       "@store/*": ["src/store/*"],
       "@api/*": ["src/api/*"],
       "@handler/*": ["src/handler/*"],
-      "@types/*": ["src/util/types/*"]
+      "@types/*": ["src/util/types/*"],
+      "@styles/*": ["src/styles/*"]
     }
   },
   "include": [

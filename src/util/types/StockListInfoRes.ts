@@ -69,6 +69,8 @@ export type mainMenuData = {
   prdy_ctrt: string;
   /** 누적 거래량 */
   acml_vol: string;
+
+  favorite: boolean;
 };
 
 /**
