@@ -74,7 +74,7 @@ export type mainMenuData = {
   /** 누적 거래량 */
   acml_vol: string;
 
-  favorite: boolean;
+  favorite?: boolean;
 };
 
 /**

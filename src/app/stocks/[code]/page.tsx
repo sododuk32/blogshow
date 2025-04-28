@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import MainListMenu from '@/ui/MainListMenu';
+import MainListMenu from '@ui/MainListMenu/MainList';
 
 type Props = {
   params: { code: string };

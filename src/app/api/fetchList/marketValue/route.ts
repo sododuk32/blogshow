@@ -1,18 +1,17 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { getKey } from '@/util/cronFile/keyStore';
-import { NextApiRequest, NextApiResponse } from 'next';
 import getStockMarketValueRankList from '@handler/http/gettingList/getStockMarketValueRankList';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   const key = getKey();
   if (key) {
     const response = await getStockMarketValueRankList();
 
     if (response?.message !== 'good') {
-      return res.status(400).json({ message: response.message || 'error' });
+      return NextResponse.json({ message: response.message || 'error' }, { status: 400 });
     }
     return NextResponse.json(response);
   }
 
-  return res.status(400).json({ message: 'no key to fetch' });
+  return NextResponse.json({ message: 'no key to fetch' }, { status: 400 });
 }

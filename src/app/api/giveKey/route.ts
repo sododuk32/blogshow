@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextResponse } from 'next/server';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import { getKey, setKey } from '@/util/cronFile/keyStore';
 import fetchingHTKey, {
   fetchingHTSocketKey,
@@ -8,7 +7,7 @@ import fetchingHTKey, {
 } from '@handler/http/auth/fetchGettingKey';
 import { KeyPackage } from '@util/types/authWithHantoo';
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   const key = getKey();
 
   if (!key.valid) {
@@ -45,7 +44,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       }
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ message: 'server error' });
+      return NextResponse.json({ message: 'server error' }, { status: 500 });
     }
   }
 
