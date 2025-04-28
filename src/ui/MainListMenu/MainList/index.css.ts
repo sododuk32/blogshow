@@ -1,8 +1,23 @@
 import { style } from '@vanilla-extract/css';
-
-export const box = style({
-  padding: '16px',
-  backgroundColor: 'tomato',
-  color: 'white',
-  borderRadius: '8px',
+import { sprinkles } from '@styles/theme/sparkles.css';
+import { globals } from '@styles/theme/theme.css';
+export const box = sprinkles({
+  width: {
+    mobile: '100%',
+    tablet: '100%',
+    desktop: '800px',
+  },
+  padding: {
+    mobile: 'small',
+    tablet: 'medium',
+    desktop: 'large',
+  },
+  backgroundColor: {
+    lightMode: globals.backgroundColor.whitebgg,
+    darkMode: globals.backgroundColor.slightBlack,
+  },
+  color: {
+    lightMode: 'black',
+    darkMode: 'white',
+  },
 });

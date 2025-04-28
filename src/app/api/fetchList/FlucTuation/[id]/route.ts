@@ -16,6 +16,7 @@ export async function GET(
     if (response?.message !== 'good') {
       return res.status(400).json({ message: response.message || 'error' });
     }
+    console.log(response.data);
     return NextResponse.json(response);
   }
 

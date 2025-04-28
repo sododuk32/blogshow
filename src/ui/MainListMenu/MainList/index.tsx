@@ -27,14 +27,13 @@ function InnerMainListMenu() {
   return (
     <div className={box}>
       <MainNavBar />
-      {
-        <MainList_Table
-          category={listCategory}
-          data={data ?? []}
-          columns={thisCol ?? []}
-          isLoadings={isLoading}
-        />
-      }
+
+      <MainList_Table
+        category={listCategory}
+        data={data ?? []}
+        columns={thisCol ?? []}
+        isLoadings={isLoading}
+      />
     </div>
   );
 }

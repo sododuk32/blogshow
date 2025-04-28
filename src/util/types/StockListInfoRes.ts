@@ -55,6 +55,10 @@ export type MainMenuAlltype<T extends KeyofMainMenu> = mainMenuData & mainMenuDa
 
 // 리스트 응답에서 모든 종류에서 공통적으로 가져와야할 파라미터.
 export type mainMenuData = {
+  /**주식 단축 종목코드 */
+  stck_shrn_iscd?: string;
+  /** 유가증권 단축 종목코드 */
+  mksc_shrn_iscd: string;
   /** 해당 지표 순위 */
   data_rank: string;
   /** 한국어 회사명 */

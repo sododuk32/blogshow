@@ -1,5 +1,5 @@
 import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
-
+import { globals } from '@styles/theme/theme.css';
 export const space = {
   none: '0px',
   small: '4px',
@@ -25,9 +25,11 @@ const responsivePrope = defineProperties({
   responsiveArray: ['mobile', 'tablet', 'desktop'],
   defaultCondition: 'desktop',
   properties: {
-    width: ['100%', '50%', '25%'],
-    padding: Object.keys(space),
+    width: ['800px', '100%', '50%', '25%'],
+    padding: space,
     fontSize: Object.keys(fontSize),
+    backgroundColor: [globals.backgroundColor.slightBlack, globals.backgroundColor.whitebgg],
+    color: ['black', 'white'],
   },
 });
 

@@ -1,22 +1,33 @@
 import { globals } from '@styles/theme/theme.css';
 import { style, globalStyle } from '@vanilla-extract/css';
-
 export const tableStyle = style({
   width: '100%',
   borderCollapse: 'collapse',
-  backgroundColor: 'white',
   fontSize: 'medium',
   textAlign: 'center',
   lineHeight: '1.5',
   color: 'black',
+  backgroundColor: globals.backgroundColor.whitebgg,
+  // media queries go here
+  '@media': {
+    '(prefers-color-scheme: dark)': {
+      backgroundColor: globals.backgroundColor.gray50,
+      color: 'white',
+    },
+  },
 });
 
 globalStyle(`${tableStyle} tbody tr:nth-child(odd)`, {
   backgroundColor: globals.backgroundColor.gray50,
+  '@media': {
+    '(prefers-color-scheme: dark)': {
+      backgroundColor: globals.backgroundColor.adaptBlack,
+    },
+  },
 });
 
 export const cellStyle = style({
-  padding: '6px 4px', // 셀 안 여백
+  padding: '4px', // 셀 안 여백
   borderBottom: '1px solid #e0e0e0', // 줄 간격 나누기
 });
 

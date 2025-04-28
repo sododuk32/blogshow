@@ -2,6 +2,7 @@ import React from 'react';
 import { timeToKo } from '@util/format/time';
 import { useListContext } from './../MainList/index';
 import { KeyofMainMenu } from '@util/types/StockListInfoRes';
+import { MainNav, MainNavItem, tableWrapper, titleWrapper } from './index.css';
 
 function MainNavBar() {
   const dateNow: Date = new Date();
@@ -16,17 +17,18 @@ function MainNavBar() {
   };
 
   return (
-    <section>
-      <div>
-        <h3>실시간 차트</h3>
+    <section className={tableWrapper}>
+      <div className={titleWrapper}>
+        <h3>주제별 차트</h3>
         <label htmlFor="h3">{timeToKo(dateNow)}</label>
       </div>
-      <ul>
+      <ul className={MainNav}>
         {validKeys.map((name) => (
           <li
             key={name}
             onClick={NavHandler}
             style={{ fontWeight: listCategory === name ? 'bold' : 'normal' }}
+            className={MainNavItem}
           >
             {name}
           </li>

@@ -30,7 +30,9 @@ export const globals = createGlobalThemeContract(
       blue100: 'blue10',
       blue150: 'blue150',
       gray50: 'gray50',
+      whitebgg: 'whitebgg',
       gray100: 'gray100',
+      adaptBlack: 'adaptBlack',
     },
     spacing: {
       xs: 'xs',
@@ -40,14 +42,14 @@ export const globals = createGlobalThemeContract(
       xl: 'xl',
       xxl: 'xxl',
     },
-    breakpoints: {
-      xxl: 'xxl',
-      xl: 'xl',
-      lg: 'lg',
-      md: 'md',
-      sm: 'sm',
-      xs: 'xs',
-    },
+    // breakpoints: {
+    //   xxl: 'xxl',
+    //   xl: 'xl',
+    //   lg: 'lg',
+    //   md: 'md',
+    //   sm: 'sm',
+    //   xs: 'xs',
+    // },
   },
   (value) => `${value}`
 );
@@ -83,6 +85,8 @@ createGlobalTheme(':root', globals, {
     blue150: 'rgba(100, 168, 255, 0.70)',
     gray50: 'rgba(2, 32, 71, 0.05)',
     gray100: 'rgba(2, 32, 71, 0.34)',
+    whitebgg: 'white',
+    adaptBlack: '#1B1B21',
   },
   spacing: {
     xs: '3px',
@@ -92,14 +96,14 @@ createGlobalTheme(':root', globals, {
     xl: '15px',
     xxl: '21px',
   },
-  breakpoints: {
-    xxl: '1530px',
-    xl: '1280px',
-    lg: '768px',
-    md: '500px',
-    sm: '368px',
-    xs: '280px',
-  },
+  // breakpoints: {
+  //   xxl: '1530px',
+  //   xl: '1280px',
+  //   lg: '768px',
+  //   md: '500px',
+  //   sm: '368px',
+  //   xs: '280px',
+  // },
 });
 
 // color.primary.red.500 – #f04452
