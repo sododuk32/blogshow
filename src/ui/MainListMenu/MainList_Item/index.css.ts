@@ -1,6 +1,20 @@
 import { style } from '@vanilla-extract/css';
+import { sprinkles } from '@styles/theme/sparkles.css';
 
-export const cellStyleItem = style({
-  padding: '6px 4px', // 셀 안 여백
-  width: '100%',
-});
+export const cellStyleItem = style([
+  sprinkles({
+    fontSize: {
+      mobile: 'xsmallF',
+      tablet: 'medium',
+      desktop: 'large',
+    },
+    padding: {
+      mobile: 'xsmallSpace',
+      tablet: 'smallSpace',
+      desktop: 'smallSpace',
+    },
+  }),
+  {
+    width: '100%',
+  },
+]);

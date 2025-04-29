@@ -28,7 +28,7 @@ export default async function getFlucTuationRank(mode?: string) {
     fid_input_iscd: '0000',
     fid_rank_sort_cls_code: selectedMode,
     fid_input_cnt_1: '0',
-    fid_prc_cls_code: '0',
+    fid_prc_cls_code: '1',
     fid_trgt_cls_code: '0',
     fid_trgt_exls_cls_code: '0',
     fid_div_cls_code: '0',

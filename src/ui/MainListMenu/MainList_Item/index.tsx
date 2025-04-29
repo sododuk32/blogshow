@@ -19,7 +19,7 @@ function TableCells({
 
   if (code) {
     return (
-      <Link href={`/path/${code}`}>
+      <Link href={`/stocks/${code}`}>
         <div className={className}>{children}</div>
       </Link>
     );

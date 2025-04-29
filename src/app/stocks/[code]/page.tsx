@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import MainListMenu from '@ui/MainListMenu/MainList';
+import KrxChart from '@ui/Charts/KrxChart';
+import Intraday5MinChart from '../../../ui/Charts/TradingViewWidget';
 
 type Props = {
   params: { code: string };
@@ -12,7 +14,6 @@ async function getDogs(number: string) {
     next: { revalidate: 3600 },
   });
   if (!(await res).ok) {
-    console.log(res);
   }
   const json = await (await res).json();
 
@@ -38,13 +39,7 @@ export default async function Page({ params }: Props) {
   return (
     <div>
       {params.code.length > 0 && <h1>{params.code}</h1>}
-      <div>
-        <ul>
-          <li key={dogs.id}>{dogs?.name}</li>
-          {/* this part for server components , and props go throght out data is change every time  */}
-        </ul>
-      </div>{' '}
-      <MainListMenu />
+      <Intraday5MinChart symbol={params.code} />
     </div>
   );
 }

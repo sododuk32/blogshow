@@ -19,17 +19,34 @@ export default function MainList_Table<T>({
 }: MainListTableProps<T>): JSX.Element {
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
-  if (!data || isLoadings) {
+  if (!data && isLoadings) {
     return (
       <div>
+        {/* 초기로드를 위한 스켈레톤으로 대체 해야함. */}
         <BarLoader color="#000000" loading aria-label="Loading Spinner" data-testid="loader" />
       </div>
     );
   }
   return (
     <div>
-      <h2>{category}</h2>
       <table className={tableStyle}>
+        <colgroup>
+          {table.getHeaderGroups()[0].headers.map((header) => {
+            const isRank = header.column.id === 'data_rank';
+            const isName = header.column.id === 'hts_kor_isnm';
+            const widthVal = isRank ? '40px' : isName ? '40%' : undefined;
+            return (
+              <col
+                key={header.id}
+                style={{
+                  width: widthVal,
+                }}
+              />
+            );
+          })}
+        </colgroup>
+        {/* 이하 테이블 헤드 */}
+
         <thead>
           {table.getHeaderGroups().map((hg) => (
             <tr key={hg.id}>
@@ -41,16 +58,19 @@ export default function MainList_Table<T>({
             </tr>
           ))}
         </thead>
+        {/* 이하 테이블 바디 hts_kor_isnm */}
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className={cellStyle}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr key={(row.original as any)?.hts_kor_isnm ?? row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className={cellStyle}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -6,12 +6,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   const key = getKey();
 
   if (key) {
-    const response = await getFlucTuationRank(params?.id || '1');
+    const response = await getFlucTuationRank(params?.id || '0');
 
     if (response?.message !== 'good') {
       return NextResponse.json({ message: response.message || 'error' }, { status: 400 });
     }
-    console.log(response.data);
     return NextResponse.json(response);
   }
 

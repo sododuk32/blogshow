@@ -35,7 +35,8 @@ export function createListContext<Key extends string, RowMap extends Record<Key,
       queryKey: ['getList', listCategory, page],
       queryFn: () => opts.fetcher(listCategory),
       refetchOnWindowFocus: false,
-      refetchInterval: 60000,
+      refetchInterval: 4000,
+      staleTime: 1000 * 10,
     });
 
     const state: State = {

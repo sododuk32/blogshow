@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import safeFetch from '../safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
-import { FetchResult } from '@util/types/ErrorTypes';
 import { StockListInfoRes } from '@util/types/StockListInfoRes';
-import { Console } from 'console';
+import mockdata from './mockdata.json';
 
 /**
  * 거래량 순위
@@ -59,7 +59,7 @@ export default async function getStockAmountRankList() {
   const finalUrl = `${after.toString()}&${rawAppend}`;
 
   const { data, error } = await safeFetch<StockListInfoRes>(finalUrl, 'GET', null, headers);
-  console.log(finalUrl);
+
   if (error) {
     return { data: [], message: `${error.status}`, status: error.status };
   }

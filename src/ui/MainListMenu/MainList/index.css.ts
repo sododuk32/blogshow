@@ -8,9 +8,9 @@ export const box = sprinkles({
     desktop: '800px',
   },
   padding: {
-    mobile: 'small',
-    tablet: 'medium',
-    desktop: 'large',
+    mobile: 'smallSpace',
+    tablet: 'mediumSpace',
+    desktop: 'largeSpace',
   },
   backgroundColor: {
     lightMode: globals.backgroundColor.whitebgg,

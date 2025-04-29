@@ -16,9 +16,9 @@ export default async function getMainListData<T extends KeyofMainMenu>(
       case '거래량':
         return '/api/fetchList/amountRank';
       case '급상승':
-        return '/api/fetchList/FlucTuation/1';
+        return '/api/fetchList/FlucTuation/0';
       case '급하락':
-        return '/api/fetchList/FlucTuation/2';
+        return '/api/fetchList/FlucTuation/1';
       case '시가총액':
         return '/api/fetchList/marketValue';
       case '대량체결건수':
