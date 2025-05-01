@@ -36,12 +36,11 @@ export async function GET(req: NextRequest, { params }: { params: { symbol: stri
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
-        appkey: 'PSH9EwA2K43t21Nxm0Zi2QjtcZTWMMnKJjMT',
-        appsecret:
-          'SXDW0o1z+cxOOOsdXjyGjKSpkH51w56ZTAAmz/yyjg9oHj/ODYkd2INunhIcEyWSkVZmL5HupgvBOLcU7f/mc6Bck9nTgitYD0s3YuIb18h+EMuchWuKonyfsxwbJMNwIZDfTkUQi0rQg9PnG46uxaqBOL5YYmhU3WFKTncUxX0Ztf4BBWA=',
-        authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6IjQ0Yjg0NWQxLWZlYjctNDBiNy05NmYwLWRjMDc0NWFiMDE1YiIsInByZHRfY2QiOiIiLCJpc3MiOiJ1bm9ndyIsImV4cCI6MTc0NTk3ODY5MywiaWF0IjoxNzQ1ODkyMjkzLCJqdGkiOiJQU0g5RXdBMks0M3QyMU54bTBaaTJRanRjWlRXTU1uS0pqTVQifQ.fshKykdIq3giiChCtLT7MD9I0wPhRp1bSWtb6wLjVo_wihYbQeyLRZu4DNcqY0FPgV0tW9yGUvqolbmrEmrYSg`,
+        appkey: process.env.HanTKey || '',
+        appsecret: process.env.HanTSec || '',
+        authorization: `Bearer ..`,
         'Content-Type': 'application/json',
-        hashkey: '5f8665ec2e056a5dc39dcfcd47d61ec90a08e6121fc52e12c5f0d0ccdf0f3ef9',
+        hashkey: '',
         'content-type': 'application/json',
         custtype: 'P',
       },
