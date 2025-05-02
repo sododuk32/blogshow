@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import MainListMenu from '@ui/MainListMenu/MainList';
-import KrxChart from '@ui/Charts/KrxChart';
 import Intraday5MinChart from '../../../ui/Charts/TradingViewWidget';
 
 type Props = {

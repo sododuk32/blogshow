@@ -12,12 +12,14 @@ export type HantHeadersAccess = {
   grant_type: string;
   appkey: string;
   appsecret: string;
+  cache?: string;
 };
 
 export type HantHeadersAccessSocket = {
   grant_type: string;
   appkey: string;
   secretkey: string;
+  cache?: string;
 };
 /**
  *

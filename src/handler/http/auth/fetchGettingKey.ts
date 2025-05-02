@@ -24,6 +24,7 @@ export default async function fetchingHTKey(): Promise<HashKeyRes> {
     appkey: `Bearer ${htKey}`,
     appsecret: htSec,
     grant_type: 'client_credentials',
+    cache: 'no-store',
   };
   const reqUrl = `${HanRealUrl}/uapi/hashkey`;
   const { data, error } = await safeFetch<HashKeyRes>(reqUrl, 'GET', null, headers1);
@@ -38,6 +39,7 @@ export async function fetchingHTSocketKey(): Promise<HashKeySocketRes> {
     appkey: `${htKey}`,
     secretkey: htSec,
     grant_type: 'client_credentials',
+    cache: 'no-store',
   };
   const reqUrl = `${HanRealUrl}/oauth2/Approval`;
   const { data, error } = await safeFetch<HashKeySocketRes>(reqUrl, 'POST', headers1, {
@@ -54,6 +56,7 @@ export async function fetchingHTAccessToken(): Promise<HashKeyAccessTokenRes> {
     appkey: `${htKey}`,
     appsecret: htSec,
     grant_type: 'client_credentials',
+    cache: 'no-store',
   };
   const reqUrl = `${HanRealUrl}/oauth2/tokenP`;
 

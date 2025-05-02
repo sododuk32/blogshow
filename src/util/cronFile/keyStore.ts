@@ -61,9 +61,9 @@ export function setKey(key: KeyPackage[]) {
   console.log('전달받은 키 ');
   console.log(key);
   const data: KeyPackage[] = [
-    { ...key[0], value: key[0].value, timestamp: now },
-    { ...key[0], value: key[1].value, timestamp: now },
-    { ...key[0], value: key[2].value, timestamp: now },
+    { ...key[0], value: key[0].value, timestamp: now, type: 'hash' },
+    { ...key[0], value: key[1].value, timestamp: now, type: 'socket' },
+    { ...key[0], value: key[2].value, timestamp: now, type: 'accessKey' },
   ];
 
   fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');

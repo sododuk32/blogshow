@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // /pages/api/hantoo/intraday-5min.ts
 import { NextRequest, NextResponse } from 'next/server';
+import { getKey } from '@util/cronFile/keyStore';
+import { KeyPackage } from '@util/types/authWithHantoo';
+import { guardKeyPackege } from '@util/typeguard/keyGuard';
+import { getKSTDateTime } from '@util/format/getKst';
 
 type Bar = {
   time: number;
@@ -12,64 +16,76 @@ type Bar = {
 };
 
 export async function GET(req: NextRequest, { params }: { params: { symbol: string } }) {
-  console.log(params?.symbol);
-
   const symbol = String(params?.symbol || '');
 
   try {
+    const result = getKey();
+    guardKeyPackege(result.data, 2);
+
+    const bearer = result.data[2].value;
+    const hashi = result.data[0].value;
+
     const url = new URL(
-      'https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-time-itemchartprice'
+      'https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/quotations/inquire-time-dailychartprice'
     );
-    const now = new Date();
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-    const ss = String(now.getSeconds()).padStart(2, '0');
-    const inqrHour = `${hh}${mm}${ss}`; // ex) "153000"
+
+    const { inqrDate, inqrHour } = getKSTDateTime();
 
     url.searchParams.set('FID_COND_MRKT_DIV_CODE', 'J'); // KRX 주식
     url.searchParams.set('FID_INPUT_ISCD', symbol); // ex) "252670"
+    url.searchParams.set('FID_INPUT_DATE_1', inqrDate); // HHMMSS 기준 시각
     url.searchParams.set('FID_INPUT_HOUR_1', inqrHour); // HHMMSS 기준 시각
-    url.searchParams.set('FID_PW_DATA_INCU_YN', 'N'); // 당일만
-    url.searchParams.set('FID_ETC_CLS_CODE', '0'); // 기본
-    url.searchParams.set('FID_CONT_LIST_MRKT_DIV_CODE', '15');
+    url.searchParams.set('FID_PW_DATA_INCU_YN', '""');
+    url.searchParams.set('FID_FAKE_TICK_INCU_YN', '""');
+
+    // url.searchParams.set('FID_CONT_LIST_MRKT_DIV_CODE', '20');
+
+    const heads = {
+      appkey: process.env.HanTKey || '',
+      appsecret: process.env.HanTSecret || '',
+      authorization: `Bearer ${bearer}`,
+      'Content-Type': 'application/json',
+      hashkey: hashi,
+      custtype: 'P',
+      tr_id: 'FHKST03010230',
+    };
 
     const response = await fetch(url.toString(), {
       method: 'GET',
-      headers: {
-        appkey: process.env.HanTKey || '',
-        appsecret: process.env.HanTSec || '',
-        authorization: `Bearer ..`,
-        'Content-Type': 'application/json',
-        hashkey: '',
-        'content-type': 'application/json',
-        custtype: 'P',
-      },
+      headers: heads,
+      cache: 'no-store',
     });
 
-    console.log(response);
     if (!response.ok) {
-      const errText = await response.text();
-      console.log(errText);
-      throw new Error(`HTTP ${response.status}: ${errText}`);
+      const json = await response.json();
+      console.log(json);
+      throw new Error(`HTTP ${response.status}:`);
     }
 
     const json = await response.json();
     // 한투 OpenAPI는 output1 배열 안에 데이터가 들어있다고 가정
-    const raw = json.output1 as any[];
+    const raw = json.output2 as any[];
 
     const bars: Bar[] = raw.map((item) => {
-      // HHMMSS → UNIX timestamp (초)
+      const [yyyy, MM, dd] = item.stck_bsop_date.match(/(\d{4})(\d{2})(\d{2})/)!.slice(1);
       const hh = item.stck_cntg_hour.slice(0, 2);
-      const mm = item.stck_cntg_hour.slice(2, 4);
+      const mi = item.stck_cntg_hour.slice(2, 4);
       const ss = item.stck_cntg_hour.slice(4, 6);
-      const d = new Date();
-      d.setHours(+hh, +mm, +ss, 0);
+
+      const ts = Date.UTC(
+        +yyyy, // 년
+        +MM - 1, // 월 (0-11)
+        +dd, // 일
+        +hh - 9, // UTC 로 맞추기(=KST−9h)
+        +mi,
+        +ss
+      );
       return {
-        time: Math.floor(d.getTime() / 1000),
+        time: ts / 1000,
         open: +item.stck_oprc,
         high: +item.stck_hgpr,
         low: +item.stck_lwpr,
-        close: +item.stck_clpr,
+        close: +item.stck_prpr,
         volume: +item.cntg_vol,
       };
     });
