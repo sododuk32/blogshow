@@ -4,8 +4,8 @@ import React from 'react';
 import QueryProviders from '@handler/providers/tanstackQuery/QueryProviders';
 
 export const metadata: Metadata = {
-  title: 'My App',
-  description: 'Testing Tailwind',
+  title: 'MY WTS',
+  description: 'WTS',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

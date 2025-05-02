@@ -58,6 +58,7 @@ export default async function getBulkTransRank() {
     tr_id: 'FHKST190900C0',
     custtype: 'P',
     'content-type': 'application/json',
+    cache: 'no-store',
   };
 
   const { data, error } = await safeFetch<StockListInfoRes>(url.toString(), 'GET', null, headers);

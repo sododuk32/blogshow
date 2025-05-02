@@ -50,6 +50,7 @@ export default async function getStockMarketValueRankList() {
     tr_id: 'FHPST01740000',
     custtype: 'P',
     'content-type': 'application/json',
+    cache: 'no-store',
   };
 
   const { data, error } = await safeFetch<StockListInfoRes>(finalUrl, 'GET', null, headers);

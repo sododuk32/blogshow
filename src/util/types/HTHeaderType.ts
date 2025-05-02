@@ -33,4 +33,5 @@ export type HantHeadersMarketRank = {
   appsecret: string;
   tr_id: string;
   custtype: string;
+  cache?: string;
 };

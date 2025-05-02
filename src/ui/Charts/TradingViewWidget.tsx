@@ -44,6 +44,7 @@ export default function Intraday1MinChart({ symbol }: { symbol: string }) {
         timeVisible: true,
         secondsVisible: false,
       },
+      autoSize: true,
     });
 
     // 2) 캔들 시리즈 추가

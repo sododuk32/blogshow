@@ -6,7 +6,6 @@ export default function Page() {
   return (
     <div className="text-white p-4">
       <MainListMenu />
-      인데ㅐㄱ스
     </div>
   );
 }

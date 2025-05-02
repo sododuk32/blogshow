@@ -3,7 +3,6 @@ import safeFetch from '../safeFetch';
 import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
 import { StockListInfoRes } from '@util/types/StockListInfoRes';
-import mockdata from './mockdata.json';
 
 /**
  * 거래량 순위
@@ -40,6 +39,7 @@ export default async function getStockAmountRankList() {
     tr_id: 'FHPST01710000',
     custtype: 'P',
     'content-type': 'application/json',
+    cache: 'no-store',
   };
 
   const before = `${baseUrl}/uapi/domestic-stock/v1/quotations/volume-rank`;
@@ -64,7 +64,7 @@ export default async function getStockAmountRankList() {
     return { data: [], message: `${error.status}`, status: error.status };
   }
   const { output } = data;
-
+  console.log(output);
   return {
     data: output,
     message: `good`,

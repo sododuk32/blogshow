@@ -90,6 +90,7 @@ export async function GET(req: NextRequest, { params }: { params: { symbol: stri
       };
     });
 
+    console.log(bars);
     return NextResponse.json(bars);
   } catch (err: any) {
     // console.error(err);
