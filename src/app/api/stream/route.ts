@@ -24,6 +24,8 @@ type ClientMessage =
  *
  */
 
+// 필요한것: 클라이언트별 구독타입, 구독시 필요한 정보 목록. 2가지가있어야함.
+// 또한 이것들을 쌓아둘
 /** 서버 객체 wss type*/
 let socketReceiver: WebSocketServer | null = null;
 const ClentList: Set<Client> = new Set([]);
