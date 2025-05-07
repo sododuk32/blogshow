@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { KeyPackage } from '../types/authWithHantoo';
+import { KeyPackage } from '../types/Hant/authWithHantoo';
 
 const filePath = './cache_data/auth-key.json';
 const TTL = 1000 * 60 * 60 * 12; // 12시간
@@ -101,27 +101,24 @@ export function getKey(): KeyCheckResult {
     return { valid: false, data: null };
   }
 }
-// export function getKey(): boolean {
-//   if (!fs.existsSync(filePath)) return false;
+export function getKeyDatas(): KeyPackage[] | null {
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
 
-//   console.log(filePath);
+  try {
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    const data: KeyPackage[] = JSON.parse(raw);
 
-//   try {
-//     const raw = fs.readFileSync(filePath, 'utf-8');
-//     const data: KeyPackage[] = JSON.parse(raw);
+    // console.log('---------------------------------');
 
-//     const bothNotExpired =
-//       Date.now() - data[0].timestamp < TTL &&
-//       Date.now() - data[1].timestamp < TTL &&
-//       Date.now() - data[2].timestamp < TTL;
+    // console.log(valid);
+    // console.log(data);
+    // console.log('---------------------------------');
 
-//     const bothHaveValue = !!data[0]?.value && !!data[1]?.value && !!data[2]?.value;
-
-//     console.log(raw);
-
-//     return bothNotExpired && bothHaveValue;
-//   } catch (e) {
-//     console.error('[getKey] read error', e);
-//     return false;
-//   }
-// }
+    return data;
+  } catch (e) {
+    console.error('[getKeyInfo] read error', e);
+    return null;
+  }
+}

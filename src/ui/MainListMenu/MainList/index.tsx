@@ -6,7 +6,11 @@ import { createContext, useContext } from 'react';
 import MainList_Table from '../MainList_Table';
 import { useQuery } from '@tanstack/react-query';
 import getMainListData from '@handler/http/gettingList/getListof';
-import { MainMenuAlltype, KeyofMainMenu, mainMenuDataExtra } from '@util/types/StockListInfoRes';
+import {
+  MainMenuAlltype,
+  KeyofMainMenu,
+  mainMenuDataExtra,
+} from '@util/types/Hant/StockListInfoRes';
 import { createListContext } from '@handler/providers/Listprovider/TableProviders';
 import { columnsMap } from '../Table_Definitions/mainTableAssemble';
 

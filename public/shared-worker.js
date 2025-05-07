@@ -1,4 +1,5 @@
 // public/shared-worker.js
+import SocketOrigin from "/src/handler/socket/CommonSocketClass"
 
 const ports = [];
 let socket = null;
@@ -26,15 +27,13 @@ onconnect = (e) => {
 
     socket.onopen = () => {
       console.log('✅ WS connected');
-      // 모든 탭에 연결 알림
       ports.forEach((p) =>
         p.postMessage({ meta: { type: 'info', requestCode: 'ws' }, payload: { id: 'ws', currentValue: 'connected' } })
       );
     };
 
     socket.onmessage = (e) => {
-      const msg = JSON.parse(e.data);
-      // 받은 메시지 그대로 브로드캐스트
+      const msg = JSON.parse(e.data); 
       ports.forEach((p) =>
         p.postMessage(msg)
       );

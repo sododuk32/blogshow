@@ -6,7 +6,7 @@ import {
   KeyofMainMenu,
   MainMenuAlltype,
   mainMenuDataExtra,
-} from '@util/types/StockListInfoRes';
+} from '@util/types/Hant/StockListInfoRes';
 
 export default async function getMainListData<T extends KeyofMainMenu>(
   menu: T

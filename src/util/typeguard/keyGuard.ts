@@ -1,4 +1,4 @@
-import { KeyPackage } from '../types/authWithHantoo';
+import { KeyPackage } from '../types/Hant/authWithHantoo';
 
 /**
  * KeyPackage  type guards

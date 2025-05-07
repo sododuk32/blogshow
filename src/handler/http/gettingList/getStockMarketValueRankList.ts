@@ -1,7 +1,7 @@
 import safeFetch from '../safeFetch';
-import { HantHeadersMarketRank } from '@util/types/HTHeaderType';
+import { HantHeadersMarketRank } from '@util/types/Hant/HTHeaderType';
 import { getKey } from '@util/cronFile/keyStore';
-import { StockListInfoRes } from '@util/types/StockListInfoRes';
+import { StockListInfoRes } from '@util/types/Hant/StockListInfoRes';
 
 /**
  * 시가총액 순위

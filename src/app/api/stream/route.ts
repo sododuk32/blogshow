@@ -1,92 +1,66 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextRequest, NextResponse } from 'next/server';
-import WebSocket, { WebSocketServer } from 'ws';
-import { parse } from 'cookie';
+/* eslint-disable prefer-const */
+import { WebSocketServer } from 'ws';
+import { ClientManager } from '@handler/socket/brokerHandler/ClientManage';
+import { createStrategies } from '@handler/socket/brokerHandler/createStrategies';
+import { ExternalConnector } from '@handler/socket/brokerHandler/outSocket';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { UuidValidate } from '@util/regex/UuidVal';
+import { parse } from 'cookie';
+import type { WebSocket as WSWebSocket } from 'ws';
+import { SocketEndpoints } from '@handler/socket/endpoint/soketConnect';
 
-interface Client {
-  id: string;
-  ws: WebSocket;
-  subscriptions: Set<string>;
-}
-type ClientMessage =
-  | { type: 'subscribe'; topic: string }
-  | { type: 'unsubscribe'; topic: string }
-  | { type: 'update'; topic: string; payload: any }
-  | { type: 'error'; message: string };
-
-// next api 내부에서 웹소캣 서버 동작하는 이유
-/**
- * 이것보다 위에서 실행하면 해당 파일을 next에서 열기만해도
- * 서버가 만들어져 버리지만 이 get요청안에서 실행되게하면
- * 특정 주소의 특정 포트에서만 실행되게됨.
- *
- *
- */
-
-// 필요한것: 클라이언트별 구독타입, 구독시 필요한 정보 목록. 2가지가있어야함.
-// 또한 이것들을 쌓아둘
-/** 서버 객체 wss type*/
 let socketReceiver: WebSocketServer | null = null;
-const ClentList: Set<Client> = new Set([]);
-const Dtates = new Date();
 
-export async function GET(requests: NextRequest) {
+export async function GET(request: NextRequest) {
   if (!socketReceiver) {
-    console.error('WebSocket이 아직 준비되지 않았습니다.');
+    const manager = new ClientManager();
+    let endpoints = SocketEndpoints;
+
+    const connector = new ExternalConnector(manager, SocketEndpoints);
+    const strategies = createStrategies(manager, connector);
+
     socketReceiver = new WebSocketServer({ port: 4433 });
-
     socketReceiver.on('connection', (ws, wsReq) => {
-      const uuidV = parse(wsReq.headers.cookie || '');
-      const uuid = uuidV.uuid;
+      // UUID 체크
+      const uuid = parse(wsReq.headers.cookie || '').uuid;
       if (!UuidValidate(uuid)) {
-        ws.send(
-          JSON.stringify({
-            type: 'error',
-            message: 'NOUUID',
-          })
-        );
-        ws.close(1008, 'Invalid UUID');
-        return;
+        ws.send(JSON.stringify({ type: 'error', message: 'NOUUID' }));
+        return ws.close(1008, 'Invalid UUID');
       }
-      const client: Client = { id: uuid, ws, subscriptions: new Set() };
 
-      ClentList.add(client);
+      const client = { id: uuid, ws, subscriptions: new Set<string>() };
+      manager.addClient(client);
 
+      // 타이머 등 초기 메시지
       const timer = setInterval(() => {
-        ws.send(
-          JSON.stringify({
-            type: 'time',
-            message: new Date().toISOString(),
-          })
-        );
+        ws.send(JSON.stringify({ type: 'time', message: new Date().toISOString() }));
       }, 1000);
 
-      ws.on('message', (raw: WebSocket.Data) => {
-        let msg: ClientMessage;
-
+      ws.on('message', (raw) => {
+        let msg;
         try {
-          // JSON.parse 결과를 ClientMessage로 단언
-          msg = JSON.parse(raw.toString()) as ClientMessage;
+          msg = JSON.parse(raw.toString());
         } catch {
-          ws.send(JSON.stringify({ type: 'error', message: 'Invalid JSON' }));
-          return;
+          return ws.send(JSON.stringify({ type: 'error', message: 'Invalid JSON' }));
         }
 
-        // 3) 타입별 분기 처리
         switch (msg.type) {
           case 'subscribe':
-            client.subscriptions.add(msg.topic);
+            manager.subscribe(client, msg.topic);
+            strategies[msg.topic]?.onSubscribe(client);
             ws.send(JSON.stringify({ type: 'subscribed', topic: msg.topic }));
             break;
 
           case 'unsubscribe':
-            client.subscriptions.delete(msg.topic);
+            manager.unsubscribe(client, msg.topic);
+            strategies[msg.topic]?.onUnsubscribe(client);
             ws.send(JSON.stringify({ type: 'unsubscribed', topic: msg.topic }));
             break;
 
           case 'update':
-            // update는 서버→클라이언트로만 쓰는 경우 생략 가능
+            // client → client 메시지는 보통 필요 없고,
+            // 외부 데이터는 externalConnector -> manager.broadcast 로 처리
             break;
 
           case 'error':
@@ -97,6 +71,7 @@ export async function GET(requests: NextRequest) {
 
       ws.on('close', () => {
         clearInterval(timer);
+        manager.removeClient(client);
       });
     });
   }
@@ -104,11 +79,7 @@ export async function GET(requests: NextRequest) {
   return NextResponse.json({ message: 'WebSocket server is running' });
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+export const config = { api: { bodyParser: false } };
 
 // 1. 각 클라이언트 객체는 구독목록을 가지고있고
 

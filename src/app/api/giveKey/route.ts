@@ -5,7 +5,7 @@ import fetchingHTKey, {
   fetchingHTSocketKey,
   fetchingHTAccessToken,
 } from '@handler/http/auth/fetchGettingKey';
-import { KeyPackage } from '@util/types/authWithHantoo';
+import { KeyPackage } from '@util/types/Hant/authWithHantoo';
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const key = getKey();

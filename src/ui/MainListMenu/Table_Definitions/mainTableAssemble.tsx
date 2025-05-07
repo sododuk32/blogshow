@@ -1,6 +1,6 @@
 // tableConfig.ts
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
-import { MainMenuAlltype, KeyofMainMenu } from '@util/types/StockListInfoRes';
+import { MainMenuAlltype, KeyofMainMenu } from '@util/types/Hant/StockListInfoRes';
 import TableCells from '@ui/MainListMenu/MainList_Item';
 import { headerBlue, cellBlue, cellRed, rightOrder, breakWord } from '../MainList_Table/index.css';
 import numberToWon, { numberToWonTotal } from '@util/format/numberToWon';

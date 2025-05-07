@@ -2,7 +2,7 @@
 // /pages/api/hantoo/intraday-5min.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { getKey } from '@util/cronFile/keyStore';
-import { KeyPackage } from '@util/types/authWithHantoo';
+import { KeyPackage } from '@util/types/Hant/authWithHantoo';
 import { guardKeyPackege } from '@util/typeguard/keyGuard';
 import { getKSTDateTime } from '@util/format/getKst';
 
