@@ -34,17 +34,18 @@ export function createRTGenericStore<G>() {
       /** 사실상 요청,삭제 전부 처리함. */
       updatePaper: (paper) =>
         set((state) => {
-          const { type, requestCode } = paper.meta;
-          const byType = state.papers[type] ?? {};
-          return {
-            papers: {
-              ...state.papers,
-              [type]: {
-                ...byType,
-                [requestCode]: paper,
-              },
-            },
-          };
+          console.log(state.papers);
+          // const { type, requestCode } = paper.meta;
+          // const byType = state.papers[type] ?? {};
+          // return {
+          //   papers: {
+          //     ...state.papers,
+          //     [type]: {
+          //       ...byType,
+          //       [requestCode]: paper,
+          //     },
+          //   },
+          // };
         }),
     }))
   );

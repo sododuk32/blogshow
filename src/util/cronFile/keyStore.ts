@@ -89,11 +89,11 @@ export function getKey(): KeyCheckResult {
     const data: KeyPackage[] = JSON.parse(raw);
 
     const valid = data.every((item) => Date.now() - item.timestamp < TTL && Boolean(item.value));
-    // console.log('---------------------------------');
+    console.log('---------------------------------');
 
-    // console.log(valid);
-    // console.log(data);
-    // console.log('---------------------------------');
+    console.log(valid);
+    console.log(data);
+    console.log('---------------------------------');
 
     return { valid, data };
   } catch (e) {

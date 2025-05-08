@@ -2,10 +2,21 @@
 import WebSocket from 'ws';
 
 export interface SocketClient {
+  /** 클라이언트 식별값. uuid로 구분 */
   id: string;
+  /** 세션객체 */
   ws: WebSocket;
-  subscriptions: Set<string>;
+
+  /** 구독중인 정보  Record<topic, 구독정보 리스트.> */
+  subscriptions: Record<string, string[]>;
 }
+export type SocketMessageBodyEvent = {
+  topic: string;
+  detail: string;
+  uuid: string;
+  ws: WebSocket;
+};
+
 export type SocketClientMessage =
   | { type: 'subscribe'; topic: string }
   | { type: 'unsubscribe'; topic: string }
@@ -36,3 +47,11 @@ export interface SocketEndpointConfig {
   bodyTemplate: HantSoketBody;
 }
 export type EndpointsRecord = Record<string, SocketEndpointConfig>;
+
+export type clientSocketMessageBody = {
+  type: string;
+  topic: string;
+  detail: string;
+  uuid?: string;
+  ws: WebSocket;
+};

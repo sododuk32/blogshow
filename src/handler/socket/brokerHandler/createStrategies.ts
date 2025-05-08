@@ -1,6 +1,7 @@
 import type { SocketClient } from '@util/types/Socket/SocketConnect';
 import type { ClientManager } from './ClientManage';
 import type { WebSocket as WSWebSocket } from 'ws';
+import { ExternalConnector } from './outSocket';
 
 export interface TopicStrategy {
   onSubscribe(client: SocketClient): void;
