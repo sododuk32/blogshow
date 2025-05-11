@@ -6,7 +6,7 @@
 .pnp.js
 .yarn/install-state.gz
 /cache_data/**
-/socktServer/**
+/socketServer/**
 
 # testing
 /coverage
