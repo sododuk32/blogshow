@@ -1,52 +1,67 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
+import { SubscriptionPaper } from '@util/types/charts/TData';
 
-export interface SubscriptionPaper<G> {
-  /** 구독 메타 정보 */
-  meta: {
-    type: string;
-    requestCode: string;
-  };
-  /** 실시간 값 */
-  payload: {
-    /** 값 식별자, 다른걸로 바꿔도댐 */
-    id: string;
-    /** 제네릭 형태로 바꿔야함.  */
-    currentValue: G;
-  };
+export type Metas = { topick: string; detail: string; isStock?: boolean };
+
+interface RealTimeState {
+  papers: Record<string, Record<string, SubscriptionPaper>>;
+  addPaper: (paper: SubscriptionPaper) => void;
+  deletePaper: (meta: Metas) => void;
+  hasStock: () => boolean;
 }
 
-interface RealTimeState<VALUETYPE> {
-  /**
-   * {
-   * name : {  }
-   * }
-   */
-  papers: Record<string, Record<string, SubscriptionPaper<VALUETYPE>>>;
+export const useRTStore = create<RealTimeState>()(
+  subscribeWithSelector((set, get) => ({
+    papers: {},
 
-  updatePaper: (paper: SubscriptionPaper<VALUETYPE>) => void;
-}
+    addPaper: (paper) =>
+      set((state) => {
+        const { topick, detail, isStock } = paper.meta;
+        const newPapers = { ...state.papers };
 
-export function createRTGenericStore<G>() {
-  return create<RealTimeState<G>>()(
-    subscribeWithSelector((set) => ({
-      papers: {},
-      /** 사실상 요청,삭제 전부 처리함. */
-      updatePaper: (paper) =>
-        set((state) => {
-          console.log(state.papers);
-          // const { type, requestCode } = paper.meta;
-          // const byType = state.papers[type] ?? {};
-          // return {
-          //   papers: {
-          //     ...state.papers,
-          //     [type]: {
-          //       ...byType,
-          //       [requestCode]: paper,
-          //     },
-          //   },
-          // };
-        }),
-    }))
-  );
-}
+        if (isStock) {
+          // 기존 stock 구독 제거
+          for (const topic in newPapers) {
+            const byType = newPapers[topic];
+            const filtered = Object.entries(byType)
+              .filter(([_, p]) => p.meta.isStock !== true)
+              .reduce<Record<string, SubscriptionPaper>>((acc, [k, p]) => ((acc[k] = p), acc), {});
+            if (Object.keys(filtered).length) {
+              newPapers[topic] = filtered;
+            } else {
+              delete newPapers[topic];
+            }
+          }
+          // 새로운 stock 구독만 추가
+          newPapers[topick] = { [detail]: paper };
+        } else {
+          // 일반 구독 누적
+          const prevByType = state.papers[topick] ?? {};
+          newPapers[topick] = { ...prevByType, [detail]: paper };
+        }
+
+        return { papers: newPapers };
+      }),
+
+    deletePaper: ({ topick, detail }) =>
+      set((state) => {
+        const byType = { ...(state.papers[topick] ?? {}) };
+        delete byType[detail];
+        const newPapers = { ...state.papers };
+        if (Object.keys(byType).length) {
+          newPapers[topick] = byType;
+        } else {
+          delete newPapers[topick];
+        }
+        return { papers: newPapers };
+      }),
+
+    hasStock: () => {
+      const papers = get().papers;
+      return Object.values(papers).some((byType) =>
+        Object.values(byType).some((p) => p.meta.isStock === true)
+      );
+    },
+  }))
+);

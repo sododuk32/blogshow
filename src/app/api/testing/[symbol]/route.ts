@@ -48,8 +48,10 @@ export async function GET(req: NextRequest, { params }: { params: { symbol: stri
       hashkey: hashi,
       custtype: 'P',
       tr_id: 'FHKST03010230',
+      cache: 'no-store',
     };
 
+    console.log('server testing');
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: heads,
@@ -58,13 +60,14 @@ export async function GET(req: NextRequest, { params }: { params: { symbol: stri
 
     if (!response.ok) {
       const json = await response.json();
-      console.log(json);
       throw new Error(`HTTP ${response.status}:`);
     }
 
     const json = await response.json();
-    // 한투 OpenAPI는 output1 배열 안에 데이터가 들어있다고 가정
+    // 한투 OpenAPI는 output2 배열 안에 데이터가 들어있다고 가정
+
     const raw = json.output2 as any[];
+    const raw2 = json.output1 as any;
 
     const bars: Bar[] = raw.map((item) => {
       const [yyyy, MM, dd] = item.stck_bsop_date.match(/(\d{4})(\d{2})(\d{2})/)!.slice(1);
@@ -90,10 +93,11 @@ export async function GET(req: NextRequest, { params }: { params: { symbol: stri
       };
     });
 
-    console.log(bars);
-    return NextResponse.json(bars);
+    return NextResponse.json({ bars, nameof: raw2 });
   } catch (err: any) {
-    // console.error(err);
+    console.error(err);
+    console.log('server testing');
+
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "WebWorker"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -36,7 +36,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "**/*.css.ts",
-    "src/app/api/giveKey"
+    "src/app/api/giveKey",
+    "/shared-worker.js",
+    "/public/shared-worker.js",
+    "public/shared-worker.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "socketServer"]
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -8,21 +9,40 @@ import {
   UTCTimestamp,
   CandlestickSeries,
 } from 'lightweight-charts';
+import { chartData } from '@util/types/charts/TData';
+import { useRTStore } from '@handler/store/sharedStore/createRTGenericStore';
+import { useSharedWorkerContext } from '../../handler/providers/SharedWorkerFileProvider/CustomSWClient';
 
-type Bar = {
-  time: UTCTimestamp;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-};
-
-export default function Intraday1MinChart({ symbol }: { symbol: string }) {
+export default function Intraday1MinChart({
+  staticData,
+  code,
+}: {
+  staticData: chartData[] | undefined;
+  code: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
+  const addPaper = useRTStore((s) => s.addPaper);
+  const hasStock = useRTStore((s) => s.hasStock);
+  const { port, postMessage } = useSharedWorkerContext();
+
+  useEffect(() => {
+    if (!port) return;
+    const handler = (e: MessageEvent) => console.log(e.data);
+    port.addEventListener('message', handler);
+    postMessage({ type: 'subscribe', topick: 'realtime', detail: code, isStock: true });
+    return () => {
+      port.removeEventListener('message', handler);
+    };
+  }, [port]);
 
   useEffect(() => {
     if (!ref.current) return;
+    // viewport 기준 실행 유무 갈라야함.
+
+    const papers = { meta: { type: 'subscribe', topick: 'realtime', detail: code, isStock: true } };
+    addPaper(papers);
+
+    // viewport 기준 실행 유무 갈라야함.
 
     // 1) 차트 생성
     const chart: IChartApi = createChart(ref.current, {
@@ -57,16 +77,7 @@ export default function Intraday1MinChart({ symbol }: { symbol: string }) {
     });
 
     // 3) 데이터 Fetch & 세팅
-    fetch(`/api/testing/${symbol}`)
-      .then((res) => res.json())
-      .then((bars: Bar[]) => {
-        // (a) 시간 오름차순 정렬
-        const sorted = bars.slice().sort((a, b) => a.time - b.time);
-        // (b) strict ascending 위한 중복 제거
-        const unique = sorted.filter((bar, idx, arr) => idx === 0 || bar.time > arr[idx - 1].time);
-        series.setData(unique);
-      })
-      .catch(console.error);
+    series.setData(staticData || []);
 
     // 4) 리사이즈 대응
     const handleResize = () => {
@@ -76,7 +87,7 @@ export default function Intraday1MinChart({ symbol }: { symbol: string }) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [symbol]);
+  }, [staticData, code]);
 
   return <div ref={ref} style={{ width: '100%', height: '300px' }} />;
 }

@@ -9,6 +9,7 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (
+    pathname === '/shared-worker.ts' ||
     pathname === '/shared-worker.js' ||
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/favicon.ico') ||
