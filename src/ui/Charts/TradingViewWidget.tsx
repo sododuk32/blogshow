@@ -29,7 +29,8 @@ export default function Intraday1MinChart({
     if (!port) return;
     const handler = (e: MessageEvent) => console.log(e.data);
     port.addEventListener('message', handler);
-    postMessage({ type: 'subscribe', topick: 'realtime', detail: code, isStock: true });
+    postMessage({ type: 'subscribe', topic: 'realtime', detail: code, isStock: true });
+
     return () => {
       port.removeEventListener('message', handler);
     };
@@ -39,7 +40,7 @@ export default function Intraday1MinChart({
     if (!ref.current) return;
     // viewport 기준 실행 유무 갈라야함.
 
-    const papers = { meta: { type: 'subscribe', topick: 'realtime', detail: code, isStock: true } };
+    const papers = { meta: { type: 'subscribe', topic: 'realtime', detail: code, isStock: true } };
     addPaper(papers);
 
     // viewport 기준 실행 유무 갈라야함.

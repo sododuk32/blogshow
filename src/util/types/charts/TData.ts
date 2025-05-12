@@ -22,7 +22,7 @@ export type CurrentDetailData = {
 export interface SubscriptionPaper {
   meta: {
     type: string;
-    topick: string;
+    topic: string;
     detail: string;
     isStock?: boolean;
   };

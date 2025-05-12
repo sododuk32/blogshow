@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 import { SubscriptionPaper } from '@util/types/charts/TData';
 
-export type Metas = { topick: string; detail: string; isStock?: boolean };
+export type Metas = { topic: string; detail: string; isStock?: boolean };
 
 interface RealTimeState {
   papers: Record<string, Record<string, SubscriptionPaper>>;
@@ -17,7 +17,7 @@ export const useRTStore = create<RealTimeState>()(
 
     addPaper: (paper) =>
       set((state) => {
-        const { topick, detail, isStock } = paper.meta;
+        const { topic, detail, isStock } = paper.meta;
         const newPapers = { ...state.papers };
 
         if (isStock) {
@@ -34,25 +34,25 @@ export const useRTStore = create<RealTimeState>()(
             }
           }
           // 새로운 stock 구독만 추가
-          newPapers[topick] = { [detail]: paper };
+          newPapers[topic] = { [detail]: paper };
         } else {
           // 일반 구독 누적
-          const prevByType = state.papers[topick] ?? {};
-          newPapers[topick] = { ...prevByType, [detail]: paper };
+          const prevByType = state.papers[topic] ?? {};
+          newPapers[topic] = { ...prevByType, [detail]: paper };
         }
 
         return { papers: newPapers };
       }),
 
-    deletePaper: ({ topick, detail }) =>
+    deletePaper: ({ topic, detail }) =>
       set((state) => {
-        const byType = { ...(state.papers[topick] ?? {}) };
+        const byType = { ...(state.papers[topic] ?? {}) };
         delete byType[detail];
         const newPapers = { ...state.papers };
         if (Object.keys(byType).length) {
-          newPapers[topick] = byType;
+          newPapers[topic] = byType;
         } else {
-          delete newPapers[topick];
+          delete newPapers[topic];
         }
         return { papers: newPapers };
       }),
