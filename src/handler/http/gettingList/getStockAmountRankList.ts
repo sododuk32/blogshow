@@ -64,6 +64,7 @@ export default async function getStockAmountRankList() {
     return { data: [], message: `${error.status}`, status: error.status };
   }
   const { output } = data;
+
   return {
     data: output,
     message: `good`,

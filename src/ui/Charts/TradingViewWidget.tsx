@@ -10,7 +10,6 @@ import {
   CandlestickSeries,
 } from 'lightweight-charts';
 import { chartData } from '@util/types/charts/TData';
-import { useRTStore } from '@handler/store/sharedStore/createRTGenericStore';
 import { useSharedWorkerContext } from '../../handler/providers/SharedWorkerFileProvider/CustomSWClient';
 
 export default function Intraday1MinChart({
@@ -21,8 +20,6 @@ export default function Intraday1MinChart({
   code: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const addPaper = useRTStore((s) => s.addPaper);
-  const hasStock = useRTStore((s) => s.hasStock);
   const { port, postMessage } = useSharedWorkerContext();
 
   useEffect(() => {
@@ -39,9 +36,6 @@ export default function Intraday1MinChart({
   useEffect(() => {
     if (!ref.current) return;
     // viewport 기준 실행 유무 갈라야함.
-
-    const papers = { meta: { type: 'subscribe', topic: 'realtime', detail: code, isStock: true } };
-    addPaper(papers);
 
     // viewport 기준 실행 유무 갈라야함.
 

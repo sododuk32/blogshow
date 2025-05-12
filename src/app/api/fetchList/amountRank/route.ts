@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
     if (response?.message !== 'good') {
       return NextResponse.json({ message: response.message || 'error' }, { status: 400 });
     }
+
     return NextResponse.json(response);
   }
 

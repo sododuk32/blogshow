@@ -15,10 +15,11 @@ export const SharedWorkerProvider = ({ children }: { children: ReactNode }) => {
     const worker = new SharedWorker('/shared-worker.js', { type: 'module' });
     worker.port.start();
 
-    // port가 준비되면 state에 넣어서 리렌더링 트리거
     setPort(worker.port);
-    console.log(worker.port);
-    // cleanup
+    window.addEventListener('beforeunload', () => {
+      worker.port.postMessage({ type: 'disconnect' });
+      worker.port.close();
+    });
     return () => {
       worker.port.close();
     };
@@ -37,7 +38,7 @@ export const SharedWorkerProvider = ({ children }: { children: ReactNode }) => {
 export const useSharedWorkerContext = () => {
   const context = useContext(SharedWorkerContext);
   if (!context) {
-    throw new Error('useSharedWorkerContext should be used within SharedWorkerContextProvider');
+    throw new Error('worker not exist');
   }
   return context;
 };
