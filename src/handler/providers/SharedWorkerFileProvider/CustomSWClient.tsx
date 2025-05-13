@@ -16,6 +16,8 @@ export const SharedWorkerProvider = ({ children }: { children: ReactNode }) => {
     worker.port.start();
 
     setPort(worker.port);
+
+    /** close 리스너 있어야 worker 인스턴스가 올바르게 동작함. */
     window.addEventListener('beforeunload', () => {
       worker.port.postMessage({ type: 'disconnect' });
       worker.port.close();

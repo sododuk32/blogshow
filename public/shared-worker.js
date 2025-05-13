@@ -6,7 +6,7 @@ const activePorts = new Set();
 
 onconnect = (e) => {
   const port = e.ports[0];
-  let manager = new RTStore();
+  let manager = new RTStore(port);
   console.log('[SharedWorker] port connected, total ports =',  e.ports.length);
 
   port.addEventListener("message", (e) => {
@@ -33,7 +33,7 @@ onconnect = (e) => {
 
 
 
-  port.start(); // Required when using addEventListener. Otherwise called implicitly by onmessage setter.
+  port.start();
  activePorts.add(port);
 };
 export {};
@@ -44,11 +44,12 @@ class RTStore {
   
   allRequestForm;
   newConnection;
-  constructor(){
+  constructor(port){
       this.allRequestForm = {};
       this.url = 'ws://localhost:4433'; 
       this.socket= null;      
       this.requestQueue =[];
+      this.currentPort = port|| null;
   }
   ensureConnection() {
 
@@ -82,6 +83,9 @@ class RTStore {
      this.socket.addEventListener('message', data => {
       const result = JSON.parse(data.data)
       console.log('WebSocket data', result);
+      this.currentPort.postMessage(result)
+
+
     });
 
   } catch (error) {

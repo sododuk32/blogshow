@@ -28,6 +28,7 @@ export default async function Page({ params }: Props) {
   const dogs = await getStockDetail(params.code);
 
   const chartdata = dogs.array;
+  console.log(chartdata);
   return (
     <div>
       {params.code.length > 0 && <h1>{params.code}</h1>}
