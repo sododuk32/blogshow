@@ -95,16 +95,16 @@ export default function IntradayChart({ staticData = [], code }: IntradayChartPr
       const data = e.data.payload?.[0]?.data;
       if (!data) return;
 
-      // 1) HHmmss → epoch 초
+      //  HHmmss → epoch 초
       const epochSec = hhmmssToEpochSeconds(Number(data.STCK_CNTG_HOUR));
-      // 2) 분 버킷
+      //  분 버킷
       const bucket = (Math.floor(epochSec / 60) * 60) as UTCTimestamp;
-      // 3) 틱 가격(혹은 필요한 가격 필드)
+      //  틱 가격(혹은 필요한 가격 필드)
       const price = Number(data.STCK_PRPR) || 0;
 
       let candle = currentCandleRef.current;
 
-      // 아직 candle 이 없다면, staticData 도 없었다는 뜻이므로 새 캔들 생성
+      // 아직 candle 이 없다면 staticData 도 없었다는 뜻이므로 새 캔들 생성
       if (!candle) {
         candle = { time: bucket, open: price, high: price, low: price, close: price };
         currentCandleRef.current = candle;
@@ -114,7 +114,7 @@ export default function IntradayChart({ staticData = [], code }: IntradayChartPr
 
       // 같은 분
       if (candle.time === bucket) {
-        // high/low 갱신
+        // high low 갱신
         candle.high = Math.max(candle.high, price);
         candle.low = Math.min(candle.low, price);
         candle.close = price;
@@ -126,7 +126,7 @@ export default function IntradayChart({ staticData = [], code }: IntradayChartPr
         // 분봉이 없는 경우 staticData 마지막값 참고
         // (만약 전 분 리턴이 없었다면 이 지점에서 마지막 candle 이 staticData 이므로 자연스럽게 이어짐)
 
-        // 1) 새 candle 객체 생성
+        //  새 candle 객체 생성
         const newCandle: Candle = {
           time: bucket,
           open: price,
