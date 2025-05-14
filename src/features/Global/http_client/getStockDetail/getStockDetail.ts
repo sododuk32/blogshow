@@ -12,7 +12,7 @@ export default async function getStockDetail(
       'GET',
       null,
       {
-        cache: 'no-store',
+        'Cache-Control': 'no-store',
       }
     );
     if (!response.data) {

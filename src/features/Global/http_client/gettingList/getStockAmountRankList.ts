@@ -39,7 +39,6 @@ export default async function getStockAmountRankList() {
     tr_id: 'FHPST01710000',
     custtype: 'P',
     'content-type': 'application/json',
-    'Cache-Control': 'no-store, no-cache, max-age=0, must-revalidate',
   };
 
   const before = `${baseUrl}/uapi/domestic-stock/v1/quotations/volume-rank`;

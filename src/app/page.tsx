@@ -4,7 +4,7 @@ import Script from 'next/script';
 
 export default function Page() {
   return (
-    <div className="text-white p-4">
+    <div>
       <MainListMenu />
     </div>
   );

@@ -58,7 +58,7 @@ export default async function getFlucTuationRank(mode?: string) {
     tr_id: 'FHPST01700000', // 트랜잭션 ID 확인됨
     custtype: 'P',
     'content-type': 'application/json',
-    'Cache-Control': 'no-store, no-cache, max-age=0, must-revalidate',
+    'Cache-Control': 'revalidate: 0',
   };
 
   const { data, error } = await safeFetch<StockListInfoRes>(url.toString(), 'GET', null, headers);

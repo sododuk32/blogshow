@@ -29,8 +29,7 @@ export default async function getMainListData<T extends KeyofMainMenu>(
   })();
 
   const { data: raw, error } = await safeFetch<StockListInfoResOutput<T>>(url, 'GET', null, {
-    cache: 'no-store',
-    'Cache-Control': 'no-store, no-cache, max-age=0, must-revalidate',
+    'Cache-Control': 'revalidate: 0',
   });
   if (error) {
     // 여기서 에러를 던져야 useQuery가 isError/error 로 캐치

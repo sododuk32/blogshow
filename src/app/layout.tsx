@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className=" text-white p-10">
+      <body>
         <SharedWorkerProvider>
           <QueryProviders>{children}</QueryProviders>
         </SharedWorkerProvider>

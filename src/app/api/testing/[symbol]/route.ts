@@ -48,14 +48,13 @@ export async function GET(req: NextRequest, { params }: { params: { symbol: stri
       hashkey: hashi,
       custtype: 'P',
       tr_id: 'FHKST03010230',
-      cache: 'no-store',
+      'Cache-Control': 'no-store',
     };
 
     console.log('server testing');
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: heads,
-      cache: 'no-store',
     });
 
     if (!response.ok) {
