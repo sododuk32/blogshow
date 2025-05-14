@@ -22,12 +22,12 @@
     "paths": {
       "@*": ["src/*"],
       "@util/*": ["src/util/*"],
-      "@ui/*": ["src/ui/*"],
       "@store/*": ["src/store/*"],
-      "@api/*": ["src/api/*"],
-      "@handler/*": ["src/handler/*"],
       "@types/*": ["src/util/types/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@features/*": ["src/features/*"],
+      "@http_client/*": ["src/features/Global/http_client/*"],
+      "@constants/*": ["src/features/Global/constants"]
     }
   },
   "include": [

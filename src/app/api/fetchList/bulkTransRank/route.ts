@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getKey } from '@/util/cronFile/keyStore';
-import getBulkTransRank from '@handler/http/gettingList/getBulkTransRank';
+import getBulkTransRank from '@features/Global/http_client/gettingList/getBulkTransRank';
 
 export async function GET(req: NextRequest) {
   const key = getKey();

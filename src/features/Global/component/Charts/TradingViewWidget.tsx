@@ -12,7 +12,7 @@ import {
   TickMarkType,
 } from 'lightweight-charts';
 import { chartData } from '@util/types/charts/TData';
-import { useSharedWorkerContext } from '@handler/providers/SharedWorkerFileProvider/CustomSWClient';
+import { useSharedWorkerContext } from '@features/Global/providers/SharedWorkerFileProvider/CustomSWClient';
 import { hhmmssToEpochSeconds } from '@util/format/time';
 
 interface IntradayChartProps {

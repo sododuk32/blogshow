@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getKey } from '@/util/cronFile/keyStore';
-import getStockAmountRankList from '@handler/http/gettingList/getStockAmountRankList';
+import getStockAmountRankList from '@features/Global/http_client/gettingList/getStockAmountRankList';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {

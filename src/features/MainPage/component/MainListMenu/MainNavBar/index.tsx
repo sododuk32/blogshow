@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
 import { timeToKo } from '@util/format/time';
-import { useListContext } from './../MainList/index';
+import { useListContext } from '../MainList/index';
 import { KeyofMainMenu } from '@util/types/Hant/StockListInfoRes';
 import { MainNav, MainNavItem, tableWrapper, titleWrapper } from './index.css';
 import dynamic from 'next/dynamic';
 
-const CurTime = dynamic(() => import('../../CurrentTime/CurTime'), {
+const CurTime = dynamic(() => import('../../../CurrentTime/CurTime'), {
   ssr: false,
 });
 function MainNavBar() {

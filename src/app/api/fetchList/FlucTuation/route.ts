@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getKey } from '@/util/cronFile/keyStore';
-import getFlucTuationRank from '@/handler/http/gettingList/getFlucTuationRank';
+import getFlucTuationRank from '@features/Global/http_client/gettingList/getFlucTuationRank';
 
 export async function GET(req: NextRequest) {
   const key = getKey();

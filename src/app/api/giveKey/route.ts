@@ -4,7 +4,7 @@ import { getKey, setKey } from '@/util/cronFile/keyStore';
 import fetchingHTKey, {
   fetchingHTSocketKey,
   fetchingHTAccessToken,
-} from '@handler/http/auth/fetchGettingKey';
+} from '@features/Global/http_client/auth/fetchGettingKey';
 import { KeyPackage } from '@util/types/Hant/authWithHantoo';
 
 export async function GET(req: NextRequest, res: NextResponse) {

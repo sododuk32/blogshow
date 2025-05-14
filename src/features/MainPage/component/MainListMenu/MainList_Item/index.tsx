@@ -4,8 +4,8 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import useNumberBlink from '@handler/hook/useNumberBlink';
-import { blinkStyles, fitContentCell } from '@styles/recipes/TableCellBlink/Tablecell.css';
+import useNumberBlink from '@features/Global/hook/useNumberBlink';
+import { blinkStyles, fitContentCell } from './Tablecell.css';
 import { cellStyleItem } from './index.css';
 
 interface TableCellsProps {

@@ -1,6 +1,6 @@
 import { globals } from '@styles/theme/theme.css';
 import { style, globalStyle } from '@vanilla-extract/css';
-import { sprinkles } from '../../../styles/theme/sparkles.css';
+import { sprinkles } from '../../../../../styles/theme/sparkles.css';
 
 export const tableStyle = style([
   {

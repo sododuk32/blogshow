@@ -1,8 +1,8 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
 import React from 'react';
-import QueryProviders from '@handler/providers/tanstackQuery/QueryProviders';
-import { SharedWorkerProvider } from '../handler/providers/SharedWorkerFileProvider/CustomSWClient';
+import QueryProviders from '@features/Global/providers/tanstackQuery/QueryProviders';
+import { SharedWorkerProvider } from '../features/Global/providers/SharedWorkerFileProvider/CustomSWClient';
 export const metadata: Metadata = {
   title: 'MY WTS',
   description: 'WTS',

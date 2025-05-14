@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getKey } from '@/util/cronFile/keyStore';
-import getStockMarketValueRankList from '@handler/http/gettingList/getStockMarketValueRankList';
+import getStockMarketValueRankList from '@features/Global/http_client/gettingList/getStockMarketValueRankList';
 
 export async function GET(req: NextRequest) {
   const key = getKey();

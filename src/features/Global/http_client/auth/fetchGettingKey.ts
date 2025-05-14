@@ -6,7 +6,7 @@ import {
   HashKeySocketRes,
   HashKeyAccessTokenRes,
 } from '@util/types/Hant/authWithHantoo';
-import { FetchErrorDetail } from '../../../util/types/ErrorTypes';
+import { FetchErrorDetail } from '../../../../util/types/ErrorTypes';
 
 // only use in server
 

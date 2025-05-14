@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import Intraday5MinChart from '@ui/Charts/TradingViewWidget';
+import Intraday5MinChart from '@features/Global/component/Charts/TradingViewWidget';
 import { chartData } from '@util/types/charts/TData';
-import getStockDetail from '@handler/http/getStockDetail/getStockDetail';
+import getStockDetail from '@features/Global/http_client/getStockDetail/getStockDetail';
 
 export const dynamic = 'force-dynamic';
 

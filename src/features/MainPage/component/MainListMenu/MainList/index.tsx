@@ -5,13 +5,13 @@ import MainNavBar from '../MainNavBar';
 import { createContext, useContext } from 'react';
 import MainList_Table from '../MainList_Table';
 import { useQuery } from '@tanstack/react-query';
-import getMainListData from '@handler/http/gettingList/getListof';
+import getMainListData from '@features/Global/http_client/gettingList/getListof';
 import {
   MainMenuAlltype,
   KeyofMainMenu,
   mainMenuDataExtra,
 } from '@util/types/Hant/StockListInfoRes';
-import { createListContext } from '@handler/providers/Listprovider/TableProviders';
+import { createListContext } from '@features/Global/providers/Listprovider/TableProviders';
 import { columnsMap } from '../Table_Definitions/mainTableAssemble';
 
 export const { ListProvider, useListContext } = createListContext<KeyofMainMenu, mainMenuDataExtra>(
