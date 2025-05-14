@@ -39,7 +39,7 @@ export default async function getStockAmountRankList() {
     tr_id: 'FHPST01710000',
     custtype: 'P',
     'content-type': 'application/json',
-    cache: 'no-store',
+    'Cache-Control': 'no-store, no-cache, max-age=0, must-revalidate',
   };
 
   const before = `${baseUrl}/uapi/domestic-stock/v1/quotations/volume-rank`;
@@ -64,7 +64,6 @@ export default async function getStockAmountRankList() {
     return { data: [], message: `${error.status}`, status: error.status };
   }
   const { output } = data;
-
   return {
     data: output,
     message: `good`,

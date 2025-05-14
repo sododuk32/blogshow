@@ -1,31 +1,54 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { cellStyleItem } from './index.css';
-import Link from 'next/link';
+'use client';
 
-function TableCells({
+import React, { ReactNode } from 'react';
+import Link from 'next/link';
+import clsx from 'clsx';
+import useNumberBlink from '@handler/hook/useNumberBlink';
+import { blinkStyles, fitContentCell } from '@styles/recipes/TableCellBlink/Tablecell.css';
+import { cellStyleItem } from './index.css';
+
+interface TableCellsProps {
+  children?: ReactNode;
+  styleString?: string;
+  info?: { row?: { original?: Record<string, any> } };
+  innerTexts?: string | null;
+  alignments?: 'left' | 'right' | 'middle' | null;
+}
+
+export default function TableCells({
   children,
   styleString,
   info,
-}: {
-  children: React.ReactNode;
-  styleString?: string | null;
-  info?: any | null;
-}) {
-  const code = info?.row?.original?.mksc_shrn_iscd || info?.row?.original?.stck_shrn_iscd;
+  innerTexts,
+  alignments,
+}: TableCellsProps) {
+  const code = info?.row?.original?.mksc_shrn_iscd ?? info?.row?.original?.stck_shrn_iscd;
 
-  const className = `${cellStyleItem}${styleString ? ` ${styleString}` : ''}`;
+  // 숫자 변화 감지 훅
+  const { blink } = useNumberBlink(innerTexts);
 
-  if (code) {
-    return (
-      <Link href={`/stocks/${code}`}>
-        <div className={className}>{children}</div>
-      </Link>
-    );
-  }
+  const variantClass = blinkStyles({
+    blink: blink ?? undefined,
+    alignments: alignments ?? undefined,
+  });
+  const innerTextStyle = clsx(variantClass, fitContentCell);
+  const className = clsx(styleString, cellStyleItem);
 
-  return <div className={className}>{children}</div>;
+  const cell = (
+    <div className={className}>
+      <div className={innerTextStyle}>{innerTexts}</div>
+    </div>
+  );
+
+  const noTextCell = <div className={className}>{children}</div>;
+  const content = innerTexts ? cell : noTextCell;
+
+  return code ? (
+    <Link href={`/stocks/${code}`} id={`/stocks/${code}`}>
+      {content}
+    </Link>
+  ) : (
+    <>{content}</>
+  );
 }
-
-export default TableCells;

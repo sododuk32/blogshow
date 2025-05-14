@@ -13,6 +13,7 @@ export type HantHeadersAccess = {
   appkey: string;
   appsecret: string;
   cache?: string;
+  'Cache-Control'?: string;
 };
 
 export type HantHeadersAccessSocket = {
@@ -20,6 +21,7 @@ export type HantHeadersAccessSocket = {
   appkey: string;
   secretkey: string;
   cache?: string;
+  'Cache-Control'?: string;
 };
 /**
  *
@@ -34,6 +36,7 @@ export type HantHeadersMarketRank = {
   tr_id: string;
   custtype: string;
   cache?: string;
+  'Cache-Control'?: string;
 };
 /**
  *
@@ -45,4 +48,5 @@ export type HantSocketHead = {
   custtype: 'B' | 'P';
   tr_type: string;
   'content-type': string;
+  'Cache-Control'?: string;
 };

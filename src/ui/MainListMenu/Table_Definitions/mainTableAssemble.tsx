@@ -3,7 +3,7 @@ import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { MainMenuAlltype, KeyofMainMenu } from '@util/types/Hant/StockListInfoRes';
 import TableCells from '@ui/MainListMenu/MainList_Item';
 import { headerBlue, cellBlue, cellRed, rightOrder, breakWord } from '../MainList_Table/index.css';
-import numberToWon, { numberToWonTotal } from '@util/format/numberToWon';
+import numberToWon, { numberToWonTotal, numberAddPoint } from '@util/format/numberToWon';
 
 const helper = createColumnHelper<MainMenuAlltype<KeyofMainMenu>>();
 // common 의 타입 = DisplayColumnDef<TData, TValue> | GroupColumnDef<TData, TValue> | AccessorColumnDef<TData, TValue>; 참고
@@ -18,7 +18,7 @@ const common = [
   helper.accessor('hts_kor_isnm', {
     header: '종목명',
     cell: (i) => (
-      <TableCells styleString={breakWord} info={i}>
+      <TableCells styleString={breakWord} info={i} alignments="left">
         {i.getValue()}
       </TableCells>
     ),
@@ -26,9 +26,12 @@ const common = [
   helper.accessor('stck_prpr', {
     header: '현재가',
     cell: (i) => (
-      <TableCells styleString={rightOrder} info={i}>
-        {i.getValue()} 원
-      </TableCells>
+      <TableCells
+        styleString={rightOrder}
+        info={i}
+        innerTexts={`${numberAddPoint(i.getValue())} 원`}
+        alignments="right"
+      />
     ),
   }),
 ];
@@ -51,14 +54,14 @@ export const columnsMap: Record<KeyofMainMenu, ColumnDef<MainMenuAlltype<KeyofMa
           <TableCells
             info={i}
             styleString={Math.sign(Number(i.getValue())) > 0 ? cellRed : cellBlue}
-          >
-            {i.getValue()}%
-          </TableCells>
+            innerTexts={`${i.getValue()}%`}
+            alignments="right"
+          />
         ),
       }),
       helper.accessor('acml_vol', {
         header: () => <TableCells styleString={headerBlue}>누적거래량</TableCells>,
-        cell: (i) => <TableCells info={i}>{numberToWon(i.getValue())}</TableCells>,
+        cell: (i) => <TableCells info={i}>{numberToWon(i.getValue())} </TableCells>,
       }),
     ],
     시가총액: [
@@ -79,9 +82,9 @@ export const columnsMap: Record<KeyofMainMenu, ColumnDef<MainMenuAlltype<KeyofMa
           <TableCells
             info={i}
             styleString={Math.sign(Number(i.getValue())) > 0 ? cellRed : cellBlue}
-          >
-            {i.getValue()}%
-          </TableCells>
+            innerTexts={`${i.getValue()}%`}
+            alignments="right"
+          />
         ),
       }),
     ],
@@ -94,9 +97,9 @@ export const columnsMap: Record<KeyofMainMenu, ColumnDef<MainMenuAlltype<KeyofMa
           <TableCells
             info={i}
             styleString={Math.sign(Number(i.getValue())) > 0 ? cellRed : cellBlue}
-          >
-            {i.getValue()}%
-          </TableCells>
+            innerTexts={`${i.getValue()}%`}
+            alignments="right"
+          />
         ),
       }),
     ],

@@ -1,6 +1,8 @@
 import { style } from '@vanilla-extract/css';
 import { sprinkles } from '@styles/theme/sparkles.css';
 
+// receipe;
+
 export const cellStyleItem = style([
   sprinkles({
     fontSize: {

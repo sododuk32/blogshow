@@ -3,7 +3,6 @@ import React, { createContext, useContext, useState, ReactNode, FC } from 'react
 import { useQuery } from '@tanstack/react-query';
 
 type CreateListContextOpts<Key extends string, RowMap extends Record<Key, any>> = {
-  /** Key 에 따라 데이터를 가져오는 함수 */
   fetcher: (key: Key) => Promise<RowMap[Key][]>;
   defaultKey: Key;
 };
@@ -11,7 +10,7 @@ type CreateListContextOpts<Key extends string, RowMap extends Record<Key, any>> 
 export function createListContext<Key extends string, RowMap extends Record<Key, any>>(
   opts: CreateListContextOpts<Key, RowMap>
 ) {
-  // Context 에 들어갈 상태 타입 ─────────────────────
+  // Context 에 들어갈 상태 타입
   type State = {
     listCategory: Key;
     setListCategory: (k: Key) => void;
@@ -22,21 +21,21 @@ export function createListContext<Key extends string, RowMap extends Record<Key,
     isLoading: boolean;
   };
 
-  // Context 객체 생성 ──────────────────────────────────────
+  // Context 객체 생성
   const Ctx = createContext<State | undefined>(undefined);
 
-  //Provider 컴포넌트 ─────────────────────────────────────
+  //Provider 컴포넌트
   const ListProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [listCategory, setListCategory] = useState<Key>(opts.defaultKey);
     const [page, setPage] = useState<number>(1);
 
-    // React Query: opts.fetcher 와 listCategory 로 데이터를 패칭
     const { data, error, isLoading } = useQuery<RowMap[Key][], Error>({
       queryKey: ['getList', listCategory, page],
       queryFn: () => opts.fetcher(listCategory),
       refetchOnWindowFocus: false,
-      refetchInterval: 40000,
-      staleTime: 4000 * 10,
+      refetchInterval: 4000,
+      staleTime: 4000,
+      experimental_prefetchInRender: false,
     });
 
     const state: State = {
@@ -52,15 +51,13 @@ export function createListContext<Key extends string, RowMap extends Record<Key,
     return <Ctx.Provider value={state}>{children}</Ctx.Provider>;
   };
 
-  // Context 사용 훅 ───────────────────────
   function useListContext(): State {
     const ctx = useContext(Ctx);
     if (!ctx) {
-      throw new Error('useListContext must be used inside a ListProvider');
+      throw new Error('no listcontext');
     }
     return ctx;
   }
 
-  // Provider 와 Hook 반환 ────────────────
   return { ListProvider, useListContext };
 }

@@ -53,12 +53,3 @@ export default function MainListMenu() {
     </ListProvider>
   );
 }
-
-// type MainListType<T extends KeyofMainMenu> = {
-//   listCategory: T | null;
-//   page: string | number | null;
-//   setPage: (page: string | number | null) => void;
-//   setListCategory: (listCategory: KeyofMainMenu | null) => void;
-//   data: MainMenuAlltype<T>[] | undefined;
-//   error: Error | null;
-// };

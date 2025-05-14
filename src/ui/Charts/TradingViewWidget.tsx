@@ -9,6 +9,7 @@ import {
   ISeriesApi,
   UTCTimestamp,
   CandlestickSeries,
+  TickMarkType,
 } from 'lightweight-charts';
 import { chartData } from '@util/types/charts/TData';
 import { useSharedWorkerContext } from '@handler/providers/SharedWorkerFileProvider/CustomSWClient';
@@ -27,10 +28,11 @@ interface Candle {
 }
 
 export default function IntradayChart({ staticData = [], code }: IntradayChartProps) {
-  const [isopen, setOpen] = useState<boolean>(false);
+  const [isView, setView] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi>();
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
+
   const { port, postMessage } = useSharedWorkerContext();
   const lastBucketRef = useRef<UTCTimestamp>(0 as UTCTimestamp);
   const currentCandleRef = useRef<Candle | null>(null);
@@ -53,7 +55,19 @@ export default function IntradayChart({ staticData = [], code }: IntradayChartPr
             timeZone: 'Asia/Seoul',
           }),
       },
-      timeScale: { timeVisible: true, secondsVisible: false },
+      timeScale: {
+        timeVisible: true,
+        secondsVisible: false,
+        tickMarkFormatter: (time: UTCTimestamp, tickMarkType: TickMarkType, locale: string) => {
+          const d = new Date(time * 1000);
+          return d.toLocaleTimeString(locale, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            timeZone: 'Asia/Seoul',
+          });
+        },
+      },
       autoSize: true,
     });
 
@@ -84,6 +98,7 @@ export default function IntradayChart({ staticData = [], code }: IntradayChartPr
     if (staticData.length && seriesRef.current) {
       const lastTime = staticData[staticData.length - 1].time as UTCTimestamp;
       lastBucketRef.current = lastTime;
+      console.log(staticData[staticData.length - 1].time);
     }
   }, [staticData]);
 

@@ -22,6 +22,7 @@
     "bufferutil": "^4.0.9",
     "chart.js": "^4.4.9",
     "cheerio": "^1.0.0-rc.12",
+    "clsx": "^2.1.1",
     "cookie": "^1.0.2",
     "dotenv": "^16.4.7",
     "lightweight-charts": "^5.0.6",

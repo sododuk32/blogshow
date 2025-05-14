@@ -36,3 +36,11 @@ export function numberToWonTotal(value: string) {
     return num.toString();
   }
 }
+
+export function numberAddPoint(value: string) {
+  const origin = Number(value);
+  if (typeof origin !== 'number') {
+    return origin;
+  }
+  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+}

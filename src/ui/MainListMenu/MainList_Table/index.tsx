@@ -28,7 +28,7 @@ export default function MainList_Table<T>({
     );
   }
   return (
-    <div>
+    <div id="mainlist">
       <table className={tableStyle}>
         <colgroup>
           {table.getHeaderGroups()[0].headers.map((header) => {
