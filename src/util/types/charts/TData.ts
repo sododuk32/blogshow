@@ -27,3 +27,7 @@ export interface SubscriptionPaper {
     isStock?: boolean;
   };
 }
+export interface IntradayChartProps {
+  staticData?: chartData[];
+  code: string;
+}
