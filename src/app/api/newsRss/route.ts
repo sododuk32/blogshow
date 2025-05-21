@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
     pubDate: it?.pubDate,
     description: it?.description,
   }));
-
+  console.log(data);
   return NextResponse.json({ data });
 }
+// naver api로 변경 필요. 구글 api는 구글 링크에서 원본 기사로 리디렉션되는대 이거 못써먹음.
