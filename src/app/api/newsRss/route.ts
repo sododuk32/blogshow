@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, NextRequest } from 'next/server';
-import { XMLParser } from 'fast-xml-parser';
-import getNewsFromNaver from '@features/Global/http_client/news/getNewsFromNaver';
-
-type RawRSSItem = {
-  title: string;
-  link: string;
-  pubDate: string;
-  description: string;
-};
+import getNewsFromNaver from '@features/Global/http_client/newsTap/news/getNewsFromNaver';
 
 export async function POST(req: NextRequest) {
   let body: any;

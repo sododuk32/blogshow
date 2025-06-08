@@ -1,6 +1,6 @@
-import safeFetch from '../safeFetch';
+import safeFetch from '../../safeFetch';
 import { chartData, CurrentDetailData } from '@util/types/charts/TData';
-import { newsParamsType } from '../../../../util/types/News/newsType';
+import { newsParamsType } from '../../../../../util/types/News/newsType';
 import { fetchOgImage } from './fetchOgImage';
 
 type NewResType = {
@@ -11,9 +11,9 @@ type NewResType = {
   items: newsParamsType[];
 };
 
-export default async function getNewsFromNaver(keyword: string) {
+export default async function getNewsFromNaver(keyword: string, categorys: string | null) {
   const { data, error } = await safeFetch<NewResType>(
-    `https://openapi.naver.com/v1/search/news.json?query=${keyword}&display=10&start=2&sort=sim`,
+    `https://openapi.naver.com/v1/search/news.json?query=${keyword}&display=10&start=2&sort=${categorys || 'sim'}`,
     'GET',
     null,
     {
@@ -26,7 +26,7 @@ export default async function getNewsFromNaver(keyword: string) {
   const items = data?.items ?? [];
   const itemsWithOg: newsParamsType[] = await Promise.all(
     items.map(async (item) => {
-      // 실제 OG 태그는 보통 Naver 뉴스 링크에 존재하므로 item.link를 사용합니다.
+
       const ogImage = await fetchOgImage(item.link);
       return {
         ...item,
