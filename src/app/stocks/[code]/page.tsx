@@ -3,11 +3,12 @@ import React from 'react';
 import Intraday5MinChart from '@features/Global/component/Charts/TradingViewWidget';
 import { chartData } from '@util/types/charts/TData';
 import getStockDetail from '@features/Global/http_client/getStockDetail/getStockDetail';
-
+import NewsLine from '../../../features/News/component/NewsLine/NewsLine';
+import NewsLoader from '../../../features/News/component/NewsLoader/NewsLoader';
 export const dynamic = 'force-dynamic';
 
 type Props = {
-  params: { code: string };
+  params: { code: string; korName?: string };
 };
 
 export async function generateMetadata({ params }: { params: { code: string } }) {
@@ -28,11 +29,12 @@ export default async function Page({ params }: Props) {
   const dogs = await getStockDetail(params.code);
 
   const chartdata = dogs.array;
-  console.log(chartdata);
+
   return (
     <div>
-      {params.code.length > 0 && <h1>{params.code}</h1>}
       <Intraday5MinChart code={params.code} staticData={chartdata && chartdata} />
+
+      <NewsLoader keywords={dogs.nameof?.hts_kor_isnm} />
     </div>
   );
 }

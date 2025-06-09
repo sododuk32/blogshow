@@ -83,7 +83,6 @@ function useCandleChart(staticData: chartData[]) {
     if (staticData.length && seriesRef.current) {
       const lastTime = staticData[staticData.length - 1].time as UTCTimestamp;
       lastBucketRef.current = lastTime;
-      console.log(staticData[staticData.length - 1].time);
     }
   }, [staticData]);
   return { containerRef, seriesRef };

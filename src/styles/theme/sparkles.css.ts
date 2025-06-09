@@ -16,6 +16,24 @@ export const fontSize = {
   vwsamll: '3vw',
   xsmallF: '10px',
 };
+export const thumnailHeight = {
+  large: '120px',
+  medium: '90px',
+  small: '60px',
+};
+
+export const thumnailWidth = {
+  large: '160px',
+  medium: '120px',
+  small: '80px',
+};
+
+export const separateMediaQueres = {
+  desktop: 'screen and (min-width: 1024px)',
+  tablet: 'screen and (min-width: 768px) and (max-width: 1023px)',
+  mobile: 'screen and (max-width: 767px)',
+};
+
 const responsivePrope = defineProperties({
   conditions: {
     mobile: { '@media': 'screen and (max-width: 767px)' },

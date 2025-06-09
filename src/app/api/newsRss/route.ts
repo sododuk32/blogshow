@@ -10,15 +10,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'need input' }, { status: 400 });
   }
 
-  const { word } = body || {};
+  const { word, category } = body || {};
   if (!word) {
     return NextResponse.json({ message: 'need input' }, { status: 400 });
   }
 
-  const response = await getNewsFromNaver(word);
+  const response = await getNewsFromNaver(word, category && category);
 
   if (response?.message !== 'good') {
     return NextResponse.json({ message: response.message || 'error' }, { status: 400 });
   }
+
   return NextResponse.json(response);
 }

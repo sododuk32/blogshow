@@ -32,6 +32,10 @@ export function useRealtimeCandle(
   const { port, postMessage } = useSharedWorkerContext();
   const currentRef = useRef<Candle | null>(null);
 
+  /**
+   * candle.time 이라는 현재 시간 범위와 bucket이라는 실시간 시간 값을 비교해 차트의 최고,최저,현재 값 업데이트.
+   *
+   */
   useEffect(() => {
     if (!port || !seriesRef.current) return;
 
