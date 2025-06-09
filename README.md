@@ -21,7 +21,7 @@ src/styles
 
 ## 진행 예정 목록
 0. 뉴스 기능,ui작성. ( 완료 ) 
-1. 종목 상세 페이지 provider 작성
+1. 종목 상세 페이지 ui작성, 상태선택옵션  provider 작성
 2. draggable UI 기능 작성
 3. 실시간 시세 호가창
 4. 구매 FORM
