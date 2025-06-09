@@ -19,8 +19,8 @@ src/styles
 => styles/sparkles.css.ts : 반응형 설정값,반응형 기준,쇼트핸드 설정 등 개별 컴포넌트에 적용가능한 상수 css property 모음. 
 => /src/features/Domain/component/**.css.ts  : 개별 컴포넌트에 적용 가능한 레시피.
 
-## 진행 예쩡 목록
-
+## 진행 예정 목록
+0. 뉴스 기능,ui작성. ( 완료 ) 
 1. 종목 상세 페이지 provider 작성
 2. draggable UI 기능 작성
 3. 실시간 시세 호가창
