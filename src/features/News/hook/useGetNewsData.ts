@@ -41,5 +41,6 @@ export function useGetNewsData(word?: string, category?: string) {
       return data.data;
     },
     enabled: Boolean(word),
+    refetchOnWindowFocus: false,
   });
 }

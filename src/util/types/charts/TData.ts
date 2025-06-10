@@ -30,4 +30,5 @@ export interface SubscriptionPaper {
 export interface IntradayChartProps {
   staticData?: chartData[];
   code: string;
+  stockName: string;
 }

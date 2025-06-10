@@ -8,10 +8,16 @@ interface SharedWorkerProps {
 
 const SharedWorkerContext = createContext<SharedWorkerProps | undefined>(undefined);
 
+/**
+ * sharedworker 프로바이더,컨텍스트
+ * @param param0
+ * @returns
+ */
 export const SharedWorkerProvider = ({ children }: { children: ReactNode }) => {
   const [port, setPort] = useState<MessagePort | null>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const worker = new SharedWorker('/shared-worker.js', { type: 'module' });
     worker.port.start();
 

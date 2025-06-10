@@ -35,6 +35,7 @@ export function useRealtimeCandle(
   /**
    * candle.time 이라는 현재 시간 범위와 bucket이라는 실시간 시간 값을 비교해 차트의 최고,최저,현재 값 업데이트.
    *
+   * workerContext를 페이지 단위로 선언하고 이 커스텀훅엔 값만 내려줄수도있음.
    */
   useEffect(() => {
     if (!port || !seriesRef.current) return;
@@ -46,7 +47,6 @@ export function useRealtimeCandle(
       const epoch = hhmmssToEpochSeconds(Number(data.STCK_CNTG_HOUR));
       const bucket = (Math.floor(epoch / 60) * 60) as UTCTimestamp;
       const price = Number(data.STCK_PRPR) || 0;
-
       let candle = currentRef.current;
 
       if (!candle) {

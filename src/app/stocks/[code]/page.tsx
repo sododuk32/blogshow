@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: { params: { code: string } })
     title: `${stock?.hts_kor_isnm}`,
     description: `[${params}] ${stock?.hts_kor_isnm} 주식 정보 `,
     openGraph: {
-      title: `${stock?.hts_kor_isnm} 상세 페이지`,
-      description: `[${params}] ${stock?.hts_kor_isnm}`,
+      title: `${stock?.hts_kor_isnm || 'my wts'} 상세 페이지`,
+      description: `[${params}] ${stock?.hts_kor_isnm} 주식 정보`,
       images: '',
     },
   };
@@ -29,10 +29,13 @@ export default async function Page({ params }: Props) {
   const dogs = await getStockDetail(params.code);
 
   const chartdata = dogs.array;
-
   return (
     <div>
-      <Intraday5MinChart code={params.code} staticData={chartdata && chartdata} />
+      <Intraday5MinChart
+        code={params.code}
+        staticData={chartdata && chartdata}
+        stockName={dogs.nameof?.hts_kor_isnm}
+      />
 
       <NewsLoader keywords={dogs.nameof?.hts_kor_isnm} />
     </div>
